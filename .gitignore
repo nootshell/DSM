@@ -1,0 +1,27 @@
+# Whitelisting mode
+*
+!*/
+
+# Repository files
+!.gitignore
+!.editorconfig
+
+# Project files
+!*.sln
+!*.csproj
+
+# Source files
+!*.cs
+
+# Resource files
+!*.resx
+!*.png
+!*.ico
+
+# Documentation files
+!*.md
+
+# Explicit blacklist
+bin
+obj
+.git

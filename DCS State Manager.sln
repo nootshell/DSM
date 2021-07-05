@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSM.GUI", "DSM.GUI\DSM.GUI.csproj", "{AF298116-25AA-4F6E-AFBB-D3729EED0540}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{B34198DB-CFF2-4203-B728-1A05F9CE2083}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A343A5D-842A-4CF9-B27D-506AEF67FEBC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSM.API", "DSM.API\DSM.API.csproj", "{FF68F0D0-9946-40E7-B92D-900B5A7EDE6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSM.CLI", "DSM.CLI\DSM.CLI.csproj", "{2A838257-225C-4E5A-B287-C6143E1E3D97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Relua", "Relua\Relua.csproj", "{47566D06-A688-4E97-83B4-BE04F254E304}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF298116-25AA-4F6E-AFBB-D3729EED0540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF298116-25AA-4F6E-AFBB-D3729EED0540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF298116-25AA-4F6E-AFBB-D3729EED0540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF298116-25AA-4F6E-AFBB-D3729EED0540}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF68F0D0-9946-40E7-B92D-900B5A7EDE6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF68F0D0-9946-40E7-B92D-900B5A7EDE6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF68F0D0-9946-40E7-B92D-900B5A7EDE6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF68F0D0-9946-40E7-B92D-900B5A7EDE6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A838257-225C-4E5A-B287-C6143E1E3D97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A838257-225C-4E5A-B287-C6143E1E3D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A838257-225C-4E5A-B287-C6143E1E3D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A838257-225C-4E5A-B287-C6143E1E3D97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47566D06-A688-4E97-83B4-BE04F254E304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47566D06-A688-4E97-83B4-BE04F254E304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47566D06-A688-4E97-83B4-BE04F254E304}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47566D06-A688-4E97-83B4-BE04F254E304}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D78949F9-B135-4C43-ABFB-1C8B536A2348}
+	EndGlobalSection
+EndGlobal
