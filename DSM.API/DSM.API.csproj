@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\git\Relua\Relua\Relua.csproj" />
+    <ProjectReference Include="..\Relua\Relua.csproj" />
   </ItemGroup>
 
 </Project>
