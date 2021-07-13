@@ -4,6 +4,7 @@ using System.IO;
 
 using DSM.API.Extensions;
 using DSM.API.Modules;
+using DSM.API.Parsers;
 
 using Relua;
 
@@ -41,13 +42,17 @@ namespace DSM.API.Installations {
 
 			TModule module;
 			foreach (string file in Directory.GetDirectories(path)) {
+				if (file.EndsWith("F-16C")) {
+					;
+				}
+
 				if (!File.Exists($"{file}/entry.lua")) {
 					continue;
 				}
 
 				module = null;
 				try {
-					module = Module.FromPluginFile<TModule>($"{file}/entry.lua");
+					module = (new PluginFileParser($"{file}/entry.lua")).Parse<TModule>();
 				} catch (ParserException) {
 					Console.WriteLine($"Parser exception in {file}");
 					continue;

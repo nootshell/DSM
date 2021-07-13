@@ -98,7 +98,7 @@ namespace DSM.GUI.Forms {
 			);
 
 			this.AddModuleDatabind(
-				nameof(this.SelectedModule.FilesystemSlug),
+				nameof(this.SelectedModule.PrettyFilesystemSlugs),
 				this.lblModuleInfoDetailsSlugFilesystemValue,
 				nameof(this.lblModuleInfoDetailsSlugFilesystemValue.Text)
 			);
@@ -144,7 +144,7 @@ namespace DSM.GUI.Forms {
 				key_img = null;
 
 				if (module.IconPathRelative != null) {
-					key_img = module.FilesystemSlug;
+					key_img = module.InstallPathSlug;
 
 					imageList.Images.Add(
 						key_img,

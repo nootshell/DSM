@@ -255,7 +255,7 @@ namespace DSM.GUI.Forms {
 			// lblModuleInfoDetailsVersionValue
 			// 
 			this.lblModuleInfoDetailsVersionValue.AutoSize = true;
-			this.lblModuleInfoDetailsVersionValue.Location = new System.Drawing.Point(184, 40);
+			this.lblModuleInfoDetailsVersionValue.Location = new System.Drawing.Point(190, 40);
 			this.lblModuleInfoDetailsVersionValue.Name = "lblModuleInfoDetailsVersionValue";
 			this.lblModuleInfoDetailsVersionValue.Size = new System.Drawing.Size(55, 13);
 			this.lblModuleInfoDetailsVersionValue.TabIndex = 11;
@@ -286,7 +286,7 @@ namespace DSM.GUI.Forms {
 			// lblModuleInfoDetailsDeveloperValue
 			// 
 			this.lblModuleInfoDetailsDeveloperValue.AutoSize = true;
-			this.lblModuleInfoDetailsDeveloperValue.Location = new System.Drawing.Point(184, 53);
+			this.lblModuleInfoDetailsDeveloperValue.Location = new System.Drawing.Point(190, 53);
 			this.lblModuleInfoDetailsDeveloperValue.Name = "lblModuleInfoDetailsDeveloperValue";
 			this.lblModuleInfoDetailsDeveloperValue.Size = new System.Drawing.Size(72, 13);
 			this.lblModuleInfoDetailsDeveloperValue.TabIndex = 7;
@@ -295,7 +295,7 @@ namespace DSM.GUI.Forms {
 			// lblModuleInfoDetailsSlugUpdateValue
 			// 
 			this.lblModuleInfoDetailsSlugUpdateValue.AutoSize = true;
-			this.lblModuleInfoDetailsSlugUpdateValue.Location = new System.Drawing.Point(184, 66);
+			this.lblModuleInfoDetailsSlugUpdateValue.Location = new System.Drawing.Point(190, 66);
 			this.lblModuleInfoDetailsSlugUpdateValue.Name = "lblModuleInfoDetailsSlugUpdateValue";
 			this.lblModuleInfoDetailsSlugUpdateValue.Size = new System.Drawing.Size(86, 13);
 			this.lblModuleInfoDetailsSlugUpdateValue.TabIndex = 6;
@@ -304,7 +304,7 @@ namespace DSM.GUI.Forms {
 			// lblModuleInfoDetailsSlugFilesystemValue
 			// 
 			this.lblModuleInfoDetailsSlugFilesystemValue.AutoSize = true;
-			this.lblModuleInfoDetailsSlugFilesystemValue.Location = new System.Drawing.Point(184, 79);
+			this.lblModuleInfoDetailsSlugFilesystemValue.Location = new System.Drawing.Point(190, 79);
 			this.lblModuleInfoDetailsSlugFilesystemValue.Name = "lblModuleInfoDetailsSlugFilesystemValue";
 			this.lblModuleInfoDetailsSlugFilesystemValue.Size = new System.Drawing.Size(108, 13);
 			this.lblModuleInfoDetailsSlugFilesystemValue.TabIndex = 5;
@@ -324,9 +324,9 @@ namespace DSM.GUI.Forms {
 			this.lblModuleInfoDetailsSlugFilesystem.AutoSize = true;
 			this.lblModuleInfoDetailsSlugFilesystem.Location = new System.Drawing.Point(98, 79);
 			this.lblModuleInfoDetailsSlugFilesystem.Name = "lblModuleInfoDetailsSlugFilesystem";
-			this.lblModuleInfoDetailsSlugFilesystem.Size = new System.Drawing.Size(80, 13);
+			this.lblModuleInfoDetailsSlugFilesystem.Size = new System.Drawing.Size(91, 13);
 			this.lblModuleInfoDetailsSlugFilesystem.TabIndex = 3;
-			this.lblModuleInfoDetailsSlugFilesystem.Text = "Filesystem slug:";
+			this.lblModuleInfoDetailsSlugFilesystem.Text = "Filesystem slug(s):";
 			// 
 			// lblModuleInformationDetailsDeveloper
 			// 
@@ -340,7 +340,7 @@ namespace DSM.GUI.Forms {
 			// lblModuleInfoDetailsNameValue
 			// 
 			this.lblModuleInfoDetailsNameValue.AutoSize = true;
-			this.lblModuleInfoDetailsNameValue.Location = new System.Drawing.Point(184, 27);
+			this.lblModuleInfoDetailsNameValue.Location = new System.Drawing.Point(190, 27);
 			this.lblModuleInfoDetailsNameValue.Name = "lblModuleInfoDetailsNameValue";
 			this.lblModuleInfoDetailsNameValue.Size = new System.Drawing.Size(38, 13);
 			this.lblModuleInfoDetailsNameValue.TabIndex = 1;
