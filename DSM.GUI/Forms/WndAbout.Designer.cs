@@ -54,11 +54,11 @@ namespace DSM.GUI.Forms {
 			// 
 			// lblTitle
 			// 
-			this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
+			this.lblTitle.Font = new System.Drawing.Font("Calibri", 28F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
 			this.lblTitle.Location = new System.Drawing.Point(82, 16);
 			this.lblTitle.Name = "lblTitle";
-			this.lblTitle.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-			this.lblTitle.Size = new System.Drawing.Size(422, 34);
+			this.lblTitle.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+			this.lblTitle.Size = new System.Drawing.Size(366, 34);
 			this.lblTitle.TabIndex = 1;
 			this.lblTitle.Text = "TITLE";
 			this.lblTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -66,7 +66,7 @@ namespace DSM.GUI.Forms {
 			// lblAuthorsValue
 			// 
 			this.lblAuthorsValue.AutoSize = true;
-			this.lblAuthorsValue.Location = new System.Drawing.Point(104, 77);
+			this.lblAuthorsValue.Location = new System.Drawing.Point(104, 76);
 			this.lblAuthorsValue.Margin = new System.Windows.Forms.Padding(12, 0, 3, 0);
 			this.lblAuthorsValue.Name = "lblAuthorsValue";
 			this.lblAuthorsValue.Size = new System.Drawing.Size(60, 13);
@@ -76,7 +76,7 @@ namespace DSM.GUI.Forms {
 			// lblAuthors
 			// 
 			this.lblAuthors.AutoSize = true;
-			this.lblAuthors.Location = new System.Drawing.Point(95, 64);
+			this.lblAuthors.Location = new System.Drawing.Point(95, 63);
 			this.lblAuthors.Margin = new System.Windows.Forms.Padding(16, 0, 3, 0);
 			this.lblAuthors.Name = "lblAuthors";
 			this.lblAuthors.Size = new System.Drawing.Size(46, 13);
