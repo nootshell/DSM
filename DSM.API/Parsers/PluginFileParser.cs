@@ -247,7 +247,7 @@ namespace DSM.API.Parsers {
 			module.InstallPathSlug = fsslug;
 			module.AddFilesystemSlugIfNone(fsslug);
 
-			module.Finalize();
+			module.FinalizeInit();
 			return module;
 		}
 

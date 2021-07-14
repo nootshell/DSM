@@ -78,7 +78,7 @@ namespace DSM.API.Modules {
 
 
 
-		internal void Finalize() {
+		internal void FinalizeInit() {
 			this.FilesystemSlugs = this.filesystemSlugs.ToArray();
 		}
 
