@@ -270,7 +270,7 @@ namespace DSM.GUI.Forms {
 
 
 		private void OnMenuItem_Settings(object sender, EventArgs e) {
-			_ = (new WndSettings()).ShowDialog(this);
+			_ = (new WndSettings() { Context = this.Context }).ShowDialog(this);
 		}
 
 		private void OnMenuItem_About(object sender, EventArgs e) {

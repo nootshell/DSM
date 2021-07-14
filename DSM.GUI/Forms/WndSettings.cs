@@ -3,15 +3,20 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
+using DSM.API;
 using DSM.API.Installations;
+using DSM.API.Utilities;
 using DSM.GUI.Utilities;
-
-
-
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DSM.GUI.Forms {
 
 	public partial class WndSettings : Form {
+
+		public DSMContext Context { get; set; }
+
+
+
 
 		public WndSettings() {
 			this.InitializeComponent();
@@ -34,15 +39,19 @@ namespace DSM.GUI.Forms {
 		protected override void OnLoad(EventArgs ev) {
 			base.OnLoad(ev);
 
+			if (this.Context == null) {
+				throw new InvalidOperationException();
+			}
+
 			ToolTip tooltip = new ToolTip();
 			tooltip.SetToolTip(this.cbOverrideFallback, "Select this to use the override path as a fallback path instead, in case the installation cannot be detected at runtime.");
 
-			string path = Installation.Detected.Path;
+			string path = this.Context.Installation.Path;
 			this.lblDetectedPathValue.Text = path;
 			this.lblDetectedPathValue.LinkArea = new LinkArea(0, path.Length);
 			tooltip.SetToolTip(this.lblDetectedPathValue, Strings.OPEN_INSTALLDIR_IN_EXPLORER);
 
-			InstallationType typeV = Installation.Detected.Type;
+			InstallationType typeV = this.Context.Installation.Type;
 			string homepage = Installation.GetTypeHomepage(typeV);
 			string type = typeV.ToString();
 			this.lblDetectedTypeValue.Text = type;
@@ -70,21 +79,44 @@ namespace DSM.GUI.Forms {
 
 
 		private void Override_BrowsePath(object sender, EventArgs e) {
-			using (FolderBrowserDialog dialog = new FolderBrowserDialog()) {
-				dialog.Description = $"Select a folder to use as installation path {(this.cbOverrideFallback.Checked ? "fallback" : "override")}.";
-				dialog.ShowNewFolderButton = false;
+			using (CommonOpenFileDialog dialog = new CommonOpenFileDialog()) {
+				dialog.Title = $"Select {(this.cbOverrideFallback.Checked ? "a fallback" : "an override")} installation folder";
+				dialog.IsFolderPicker = true;
+				dialog.EnsurePathExists = true;
+				dialog.Multiselect = false;
 
-				if (Directory.Exists(this.tbOverridePathValue.Text)) {
-					dialog.SelectedPath = this.tbOverridePathValue.Text;
-				} else if (Directory.Exists(Installation.Detected.Path)) {
-					dialog.SelectedPath = Installation.Detected.Path;
+				bool found = false;
+				string path_norm = Normalize.FilesystemPath(this.tbOverridePathValue.Text);
+				if (Directory.Exists(path_norm)) {
+					found = true;
 				} else {
-					// something smart here (e.g. quick dir scan or whatever)
+					string path_proc = Normalize.ProcessableFilesystemPath(path_norm);
+
+					int idx;
+					while ((idx = path_proc.LastIndexOf("/")) > 0) {
+						path_proc = path_proc.Substring(0, idx);
+						path_norm = Normalize.FilesystemPath(path_proc);
+
+						if (Directory.Exists(path_norm)) {
+							found = true;
+							break;
+						}
+					}
 				}
 
-				DialogResult result = dialog.ShowDialog(this);
-				if (result == DialogResult.OK) {
-					string path = dialog.SelectedPath;
+				if (!found) {
+					path_norm = Normalize.FilesystemPath(this.Context.Installation.Path);
+					if (!Directory.Exists(path_norm)) {
+						path_norm = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+					}
+				}
+
+				dialog.InitialDirectory = Path.GetDirectoryName(path_norm);
+				dialog.DefaultDirectory = dialog.DefaultFileName = Path.GetFileName(path_norm);
+
+				CommonFileDialogResult result = dialog.ShowDialog(this.Handle);
+				if (result == CommonFileDialogResult.Ok) {
+					string path = dialog.FileName;
 
 					InstallationType type = Installation.VerifyInstallation(path);
 					if (type != InstallationType.Unknown || MessageBox.Show(this, Strings.USE_UNVERIFIED_FOLDER, Strings.WARNING, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
@@ -96,8 +128,10 @@ namespace DSM.GUI.Forms {
 			}
 		}
 
+
 		private void lblDetectedPathValue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 			=> DefaultEvents.OnLinkClicked_OpenFolder(sender, e);
+
 
 		private void OnTabControl_IndexChanged(object sender, EventArgs e)
 			=> this.UpdateTitle();
