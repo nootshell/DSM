@@ -42,10 +42,6 @@ namespace DSM.API.Installations {
 
 			TModule module;
 			foreach (string file in Directory.GetDirectories(path)) {
-				if (file.EndsWith("F-16C")) {
-					;
-				}
-
 				if (!File.Exists($"{file}/entry.lua")) {
 					continue;
 				}
