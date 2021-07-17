@@ -7,9 +7,7 @@ using DSM.API;
 using DSM.API.Modules;
 using DSM.API.Utilities;
 using DSM.GUI.Utilities;
-
-
-
+using DSM.API.Directories;
 
 namespace DSM.GUI.Forms {
 
@@ -24,8 +22,6 @@ namespace DSM.GUI.Forms {
 			get => (Module)this.moduleDataSource.DataSource;
 			set => this.moduleDataSource.DataSource = value;
 		}
-
-		public string SelectedVariant { get; set; }
 
 
 
@@ -110,9 +106,6 @@ namespace DSM.GUI.Forms {
 				"No description available."
 			);
 
-
-			this.menuOptionsItemVariantDefault.Tag = Strings.DEFAULT_VARIANT;
-
 			this.UpdateTitle();
 		}
 
@@ -183,8 +176,8 @@ namespace DSM.GUI.Forms {
 		protected void UpdateTitle() {
 			string title = Strings.TITLE;
 
-			if (this.SelectedVariant != null && this.SelectedVariant != Strings.DEFAULT_VARIANT) {
-				title += $" ({this.SelectedVariant})";
+			if (this.Context?.State != null && this.Context.State.Name != Strings.DEFAULT_VARIANT) {
+				title += $" ({this.Context.State.Name})";
 			}
 
 			this.Text = title;
@@ -202,11 +195,11 @@ namespace DSM.GUI.Forms {
 
 			bool skip, added = false;
 			MenuItemCollection variants = this.menuOptionsItemVariant.MenuItems;
-			foreach (string variant in StateManager.ExistingVariants) {
+			foreach (StateDirectory variant in this.Context.StateDirectoryManager.GetStateDirectories()) {
 				skip = false;
 
 				foreach (MenuItem item in variants) {
-					if (item.Tag is string item_var && item_var == variant) {
+					if (item.Tag is StateDirectory item_dir && item_dir == variant) {
 						skip = true;
 						break;
 					}
@@ -216,26 +209,9 @@ namespace DSM.GUI.Forms {
 					continue;
 				}
 
-				_ = variants.Add(new MenuItem(variant, this.OnMenuItem_Variant) { RadioCheck = true, Tag = variant });
+				// TODO: add checked to last selected&saved variant instead of first
+				int sel = variants.Add(new MenuItem(variant.Name, this.OnMenuItem_Variant) { RadioCheck = true, Tag = variant, Checked = !added });
 				added = true;
-			}
-
-			MenuItem selectedVariant = null;
-			if (added) {
-				selectedVariant = this.menuOptionsItemVariantDefault;
-
-				// TODO: determine default variant
-				this.menuOptionsItemVariantDefault.Checked = true;
-			} else {
-				selectedVariant = this.menuOptionsItemVariantDefault;
-
-				this.menuOptionsItemVariantDefault.Checked = true;
-				this.menuOptionsItemVariantDefault.Enabled = false;
-				this.menuOptionsItemVariantSeparator.Visible = false;
-			}
-
-			if (selectedVariant != null) {
-				selectedVariant.PerformClick();
 			}
 
 
@@ -287,33 +263,28 @@ namespace DSM.GUI.Forms {
 
 		private void OnMenuItem_Variant(object sender, EventArgs e) {
 			MenuItemCollection variants = this.menuOptionsItemVariant.MenuItems;
-
 			MenuItem newVariant = (MenuItem)sender;
-			MenuItem curVariant = null;
-			foreach (MenuItem item in variants) {
-				if (!item.Checked) {
-					continue;
-				}
 
-				curVariant = item;
-				break;
-			}
-
-			if (curVariant == null) {
-				throw new InvalidOperationException();
-			}
-
-			if (curVariant == newVariant) {
-				if (this.SelectedVariant == null) {
-					this.SelectedVariant = (string)newVariant.Tag;
-				}
-
+			if (newVariant.Tag == this.Context.State) {
 				return;
 			}
 
+			MenuItem oldVariant = null;
+			foreach (MenuItem item in variants) {
+				if (item.Tag == this.Context.State) {
+					oldVariant = item;
+					break;
+				}
+			}
+
+			if (oldVariant == null) {
+				throw new InvalidOperationException();
+			}
+
 			newVariant.Checked = true;
-			curVariant.Checked = false;
-			this.SelectedVariant = (string)newVariant.Tag;
+			oldVariant.Checked = false;
+			this.Context.State = (StateDirectory)newVariant.Tag;
+
 			this.UpdateTitle();
 		}
 

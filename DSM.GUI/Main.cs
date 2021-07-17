@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Forms;
 
-using DSM.API.Installations;
 using DSM.GUI.Forms;
 
 
@@ -11,8 +10,6 @@ namespace DSM.GUI {
 
 	internal static class Program {
 
-		static bool HaveRequirements => ((Installation.Detected?.Type ?? InstallationType.Unknown) != InstallationType.Unknown);
-
 		/// <summary>
 		///  The main entry point for the application.
 		/// </summary>
@@ -21,11 +18,11 @@ namespace DSM.GUI {
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
-			WndLoad entry = new WndLoad();
-			Application.Run(entry);
+			WndLoad loadscreen = new WndLoad();
+			Application.Run(loadscreen);
 
-			if (HaveRequirements) {
-				Application.Run(new Forms.WndMain() { Context = entry.Context });
+			if (loadscreen.Satisfied) {
+				Application.Run(new Forms.WndMain() { Context = loadscreen.Context });
 			}
 		}
 

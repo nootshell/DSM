@@ -30,8 +30,6 @@ namespace DSM.GUI.Forms {
 			this.menuFileItemExit = new System.Windows.Forms.MenuItem();
 			this.menuOptionsItem = new System.Windows.Forms.MenuItem();
 			this.menuOptionsItemVariant = new System.Windows.Forms.MenuItem();
-			this.menuOptionsItemVariantDefault = new System.Windows.Forms.MenuItem();
-			this.menuOptionsItemVariantSeparator = new System.Windows.Forms.MenuItem();
 			this.menuOptionsItemSeparator = new System.Windows.Forms.MenuItem();
 			this.menuOptionsItemSettings = new System.Windows.Forms.MenuItem();
 			this.menuHelpItem = new System.Windows.Forms.MenuItem();
@@ -112,23 +110,7 @@ namespace DSM.GUI.Forms {
 			// menuOptionsItemVariant
 			// 
 			this.menuOptionsItemVariant.Index = 0;
-			this.menuOptionsItemVariant.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuOptionsItemVariantDefault,
-            this.menuOptionsItemVariantSeparator});
 			this.menuOptionsItemVariant.Text = "&Variant";
-			// 
-			// menuOptionsItemVariantDefault
-			// 
-			this.menuOptionsItemVariantDefault.Index = 0;
-			this.menuOptionsItemVariantDefault.RadioCheck = true;
-			this.menuOptionsItemVariantDefault.Tag = "";
-			this.menuOptionsItemVariantDefault.Text = "&Default";
-			this.menuOptionsItemVariantDefault.Click += new System.EventHandler(this.OnMenuItem_Variant);
-			// 
-			// menuOptionsItemVariantSeparator
-			// 
-			this.menuOptionsItemVariantSeparator.Index = 1;
-			this.menuOptionsItemVariantSeparator.Text = "-";
 			// 
 			// menuOptionsItemSeparator
 			// 
@@ -469,8 +451,6 @@ namespace DSM.GUI.Forms {
 		private System.Windows.Forms.MenuItem menuFileItemRestart;
 		private System.Windows.Forms.MenuItem menuOptionsItem;
 		private System.Windows.Forms.MenuItem menuOptionsItemVariant;
-		private System.Windows.Forms.MenuItem menuOptionsItemVariantDefault;
-		private System.Windows.Forms.MenuItem menuOptionsItemVariantSeparator;
 		private System.Windows.Forms.TreeView tvModules;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.Panel pModule;

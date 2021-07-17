@@ -4,7 +4,8 @@ using System.IO;
 using System.Windows.Forms;
 
 using DSM.API;
-using DSM.API.Installations;
+using DSM.API.Directories;
+using DSM.API.Directories.Managers;
 using DSM.API.Utilities;
 using DSM.GUI.Utilities;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -51,8 +52,8 @@ namespace DSM.GUI.Forms {
 			this.lblDetectedPathValue.LinkArea = new LinkArea(0, path.Length);
 			tooltip.SetToolTip(this.lblDetectedPathValue, Strings.OPEN_INSTALLDIR_IN_EXPLORER);
 
-			InstallationType typeV = this.Context.Installation.Type;
-			string homepage = Installation.GetTypeHomepage(typeV);
+			InstallationDirectory.DirectoryType typeV = this.Context.Installation.Type;
+			string homepage = this.Context.Installation.Homepage;
 			string type = typeV.ToString();
 			this.lblDetectedTypeValue.Text = type;
 			this.lblDetectedTypeValue.LinkArea = new LinkArea(0, ((homepage != null) ? type.Length : 0));
@@ -118,8 +119,8 @@ namespace DSM.GUI.Forms {
 				if (result == CommonFileDialogResult.Ok) {
 					string path = dialog.FileName;
 
-					InstallationType type = Installation.VerifyInstallation(path);
-					if (type != InstallationType.Unknown || MessageBox.Show(this, Strings.USE_UNVERIFIED_FOLDER, Strings.WARNING, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
+					InstallationDirectory.DirectoryType type = InstallationDirectoryManager.VerifyInstallation(path);
+					if (type != InstallationDirectory.DirectoryType.Unknown || MessageBox.Show(this, Strings.USE_UNVERIFIED_FOLDER, Strings.WARNING, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
 						this.tbOverridePathValue.Text = path;
 
 						// TODO: do something with it

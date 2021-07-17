@@ -1,33 +1,51 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using DSM.API.Extensions;
 using DSM.API.Modules;
 using DSM.API.Parsers;
-
+using DSM.API.Utilities;
 using Relua;
 
+namespace DSM.API.Directories {
 
+	public class InstallationDirectory : AbstractDirectory {
 
-
-namespace DSM.API.Installations {
-
-	public partial class Installation {
-
-		public string Path { get; set; }
-		public InstallationType Type { get; set; }
-
-
-
-
-		public Installation(InstallationType type, string path) : base() {
-			this.Type = type;
-			this.Path = path?.Replace("\\", "/");
+		public enum DirectoryType {
+			Unknown = 0,
+			Standalone = 1,
+			Steam = 2
 		}
 
 
 
+
+		public DirectoryType Type { get; set; }
+
+
+		private static readonly SortedDictionary<DirectoryType, string> TypeHomepages = new SortedDictionary<DirectoryType, string>() {
+			{ DirectoryType.Standalone, "https://www.digitalcombatsimulator.com/" },
+			{ DirectoryType.Steam, "https://steamcommunity.com/app/223750" }
+		};
+
+		public string Homepage { get => (TypeHomepages.ContainsKey(this.Type) ? TypeHomepages[this.Type] : null); }
+
+
+
+
+		public InstallationDirectory(DirectoryType type, string path) : base(path) {
+			this.Type = type;
+		}
+
+
+
+
+		private static readonly string[] ModuleFolders = new string[] {
+			"Mods"
+		};
 
 		public IEnumerable<TModule> GetModules<TModule>(string subdir) where TModule : Module, new() {
 			ModuleCategoryAttribute attr = typeof(TModule).GetAttribute<ModuleCategoryAttribute>(false);
@@ -69,5 +87,5 @@ namespace DSM.API.Installations {
 		}
 
 	}
-
+	
 }
