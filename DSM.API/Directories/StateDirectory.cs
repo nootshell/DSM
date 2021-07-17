@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DSM.API.Extensions;
-using DSM.API.Modules;
-using DSM.API.Parsers;
+using DSM.API.Installables.Modules;
 using DSM.API.Utilities;
 
 
@@ -37,16 +36,17 @@ namespace DSM.API.Directories {
 			}
 
 			TModule module;
-			foreach (string file in Directory.GetDirectories(path)) {
-				if (!File.Exists($"{file}/entry.lua")) {
+			foreach (string directory in Directory.GetDirectories(path)) {
+				if (!File.Exists($"{directory}/entry.lua")) {
 					continue;
 				}
 
 				module = null;
 				try {
-					module = (new PluginFileParser($"{file}/entry.lua")).Parse<TModule>();
+					module = new TModule();
+					module.ctor(directory);
 				} catch (Relua.ParserException) {
-					Console.WriteLine($"Parser exception in {file}");
+					Console.WriteLine($"Parser exception in {directory}");
 					continue;
 				}
 

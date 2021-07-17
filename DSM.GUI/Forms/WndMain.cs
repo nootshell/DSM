@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.Menu;
 
 using DSM.API;
-using DSM.API.Modules;
+using DSM.API.Installables.Modules;
 using DSM.API.Utilities;
 using DSM.GUI.Utilities;
 using DSM.API.Directories;
@@ -60,7 +60,7 @@ namespace DSM.GUI.Forms {
 
 
 			this.AddModuleDatabind(
-				nameof(this.SelectedModule.InstallPath),
+				nameof(this.SelectedModule.Path),
 				this.lblModuleInfoInstallationPathValue,
 				nameof(this.lblModuleInfoInstallationPathValue.Text)
 			);
@@ -140,13 +140,13 @@ namespace DSM.GUI.Forms {
 
 				key_img = null;
 
-				if (module.IconPathRelative != null) {
-					key_img = module.InstallPathSlug;
+				if (module.IconPath != null) {
+					key_img = module.PathSlug; // FIXME?
 
 					imageList.Images.Add(
 						key_img,
 						Image.FromFile(
-							Normalize.FilesystemPath($"{module.InstallPath}/{module.IconPathRelative}")
+							Normalize.FilesystemPath($"{module.Path}/{module.IconPath}")
 						)
 					);
 				}
@@ -240,6 +240,8 @@ namespace DSM.GUI.Forms {
 
 			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.CORE, Strings.CORE, this.Context.InstallationDirectory, this.tvModules.ImageList));
 			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.MODS, Strings.MODS, this.Context.StateDirectory, this.tvModules.ImageList));
+
+			this.tvModules.SelectedNode = this.tvModules.Nodes[0];
 
 			this.UpdateTitle();
 			this.OnTreeView_AfterSelect(this.tvModules, null);

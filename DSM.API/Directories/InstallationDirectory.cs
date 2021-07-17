@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DSM.API.Extensions;
-using DSM.API.Modules;
-using DSM.API.Parsers;
+using DSM.API.Installables.Modules;
 using DSM.API.Utilities;
 
 using Relua;

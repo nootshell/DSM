@@ -9,10 +9,13 @@ using Relua.AST;
 
 
 
-namespace DSM.API.Modules {
+namespace DSM.API.Installables.Modules {
 
 	[ModuleCategory("aircraft")]
 	public class Aircraft : Module {
+
+		public Aircraft() : base() { }
+		public Aircraft(string path) : base(path) { }
 
 	}
 
