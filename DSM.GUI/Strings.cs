@@ -9,6 +9,7 @@ namespace DSM.GUI {
 
 		internal const string TITLE = "DCS State Manager";
 		internal const string CORE = "Core";
+		internal const string MODS = "Mods";
 		internal const string DEFAULT_VARIANT = "DCS";
 		internal const string OPEN_INSTALLDIR_IN_EXPLORER = "Open the installation directory in your file explorer.";
 		internal const string USE_UNVERIFIED_FOLDER = "The specified folder could not be verified, do you still want to use it?";

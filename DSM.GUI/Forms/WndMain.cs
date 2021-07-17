@@ -28,13 +28,15 @@ namespace DSM.GUI.Forms {
 
 		public WndMain() {
 			this.InitializeComponent();
+
+
 			this.Icon = Properties.Resources.Icon;
 
 			this.tvModules.ImageList = new ImageList();
 			this.tvModules.ImageList.Images.Add(Strings.CORE, Properties.Resources.IconCore);
+			this.tvModules.ImageList.Images.Add(Strings.MODS, Properties.Resources.IconMods);
 			this.tvModules.ImageList.Images.Add(typeof(Aircraft).Name, Properties.Resources.IconAircraft);
 			this.tvModules.ImageList.Images.Add(typeof(Terrain).Name, Properties.Resources.IconTerrain);
-
 
 			this.tcModule.ImageList = new ImageList();
 			this.tcModule.ImageList.Images.Add(this.tpModuleInfo.Text, Properties.Resources.IconInformation);
@@ -124,11 +126,13 @@ namespace DSM.GUI.Forms {
 		}
 
 
-		protected virtual TreeNode BuildModuleTypeNode<TModule>(ImageList imageList) where TModule : Module, new() {
+
+
+		protected virtual TreeNode BuildModuleCategoryNode<TModule>(StateDirectory directory, ImageList imageList) where TModule : Module, new() {
 			Type type;
 			string key_img;
 			TreeNode root = null;
-			foreach (TModule module in this.Context.Installation.GetModules<TModule>()) {
+			foreach (TModule module in directory.GetModules<TModule>()) {
 				if (root == null) {
 					type = module.GetType();
 					root = new TreeNode(type.Name) { Tag = type };
@@ -159,6 +163,36 @@ namespace DSM.GUI.Forms {
 		}
 
 
+		protected virtual TreeNode BuildRootNode(string name, string imageKey, StateDirectory directory, ImageList imageList) {
+			TreeNode root = new TreeNode(name);
+			root.ImageKey = root.SelectedImageKey = imageKey;
+
+			bool any = false;
+			TreeNode node;
+
+			node = this.BuildModuleCategoryNode<Aircraft>(directory, imageList);
+			if (node != null) {
+				any = true;
+				_ = root.Nodes.Add(node);
+			}
+
+			node = this.BuildModuleCategoryNode<Terrain>(directory, imageList);
+			if (node != null) {
+				any = true;
+				_ = root.Nodes.Add(node);
+			}
+
+			if (!any) {
+				_ = root.Nodes.Add(new TreeNode("Nothing found :[") { ForeColor = Color.Firebrick });
+			}
+
+			root.Expand();
+			return root;
+		}
+
+
+
+
 		protected void ReconfigureShownTabs(Module module) {
 			this.tcModule.TabPages.Clear();
 
@@ -176,8 +210,8 @@ namespace DSM.GUI.Forms {
 		protected void UpdateTitle() {
 			string title = Strings.TITLE;
 
-			if (this.Context?.State != null && this.Context.State.Name != Strings.DEFAULT_VARIANT) {
-				title += $" ({this.Context.State.Name})";
+			if (this.Context?.StateDirectory != null) {
+				title += $" [Variant: {this.Context.StateDirectory.Name}]";
 			}
 
 			this.Text = title;
@@ -193,50 +227,19 @@ namespace DSM.GUI.Forms {
 				throw new InvalidOperationException();
 			}
 
-			bool skip, added = false;
 			MenuItemCollection variants = this.menuOptionsItemVariant.MenuItems;
 			foreach (StateDirectory variant in this.Context.StateDirectoryManager.GetStateDirectories()) {
-				skip = false;
-
-				foreach (MenuItem item in variants) {
-					if (item.Tag is StateDirectory item_dir && item_dir == variant) {
-						skip = true;
-						break;
+				_ = variants.Add(
+					new MenuItem(variant.Name, this.OnMenuItem_Variant) {
+						RadioCheck = true,
+						Tag = variant.Name,
+						Checked = (variant == this.Context.StateDirectory)
 					}
-				}
-
-				if (skip) {
-					continue;
-				}
-
-				// TODO: add checked to last selected&saved variant instead of first
-				int sel = variants.Add(new MenuItem(variant.Name, this.OnMenuItem_Variant) { RadioCheck = true, Tag = variant, Checked = !added });
-				added = true;
+				);
 			}
 
-
-			TreeNode root = new TreeNode(Strings.CORE);
-			root.ImageKey = root.SelectedImageKey = Strings.CORE;
-
-			// TODO: dynamic
-			TreeNode aircraft = this.BuildModuleTypeNode<Aircraft>(this.tvModules.ImageList);
-			if (aircraft != null) {
-				_ = root.Nodes.Add(aircraft);
-			}
-
-			// TODO: dynamic
-			TreeNode terrains = this.BuildModuleTypeNode<Terrain>(this.tvModules.ImageList);
-			if (terrains != null) {
-				_ = root.Nodes.Add(terrains);
-			}
-
-			if (aircraft == null && terrains == null) {
-				_ = root.Nodes.Add(new TreeNode("Nothing found :[") { ForeColor = Color.Firebrick });
-			}
-
-			root.Expand();
-			_ = this.tvModules.Nodes.Add(root);
-
+			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.CORE, Strings.CORE, this.Context.InstallationDirectory, this.tvModules.ImageList));
+			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.MODS, Strings.MODS, this.Context.StateDirectory, this.tvModules.ImageList));
 
 			this.UpdateTitle();
 			this.OnTreeView_AfterSelect(this.tvModules, null);
@@ -263,15 +266,10 @@ namespace DSM.GUI.Forms {
 
 		private void OnMenuItem_Variant(object sender, EventArgs e) {
 			MenuItemCollection variants = this.menuOptionsItemVariant.MenuItems;
-			MenuItem newVariant = (MenuItem)sender;
-
-			if (newVariant.Tag == this.Context.State) {
-				return;
-			}
 
 			MenuItem oldVariant = null;
 			foreach (MenuItem item in variants) {
-				if (item.Tag == this.Context.State) {
+				if (item.Checked) {
 					oldVariant = item;
 					break;
 				}
@@ -281,9 +279,17 @@ namespace DSM.GUI.Forms {
 				throw new InvalidOperationException();
 			}
 
+			MenuItem newVariant = (MenuItem)sender;
+			if (oldVariant == newVariant) {
+				return;
+			}
+
+			if (!this.Context.SetStateDirectory((string)newVariant.Tag)) {
+				return;
+			}
+
 			newVariant.Checked = true;
 			oldVariant.Checked = false;
-			this.Context.State = (StateDirectory)newVariant.Tag;
 
 			this.UpdateTitle();
 		}

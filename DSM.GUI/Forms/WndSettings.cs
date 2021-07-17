@@ -47,13 +47,13 @@ namespace DSM.GUI.Forms {
 			ToolTip tooltip = new ToolTip();
 			tooltip.SetToolTip(this.cbOverrideFallback, "Select this to use the override path as a fallback path instead, in case the installation cannot be detected at runtime.");
 
-			string path = this.Context.Installation.Path;
+			string path = this.Context.InstallationDirectory.Path;
 			this.lblDetectedPathValue.Text = path;
 			this.lblDetectedPathValue.LinkArea = new LinkArea(0, path.Length);
 			tooltip.SetToolTip(this.lblDetectedPathValue, Strings.OPEN_INSTALLDIR_IN_EXPLORER);
 
-			InstallationDirectory.DirectoryType typeV = this.Context.Installation.Type;
-			string homepage = this.Context.Installation.Homepage;
+			InstallationDirectory.DirectoryType typeV = this.Context.InstallationDirectory.Type;
+			string homepage = this.Context.InstallationDirectory.Homepage;
 			string type = typeV.ToString();
 			this.lblDetectedTypeValue.Text = type;
 			this.lblDetectedTypeValue.LinkArea = new LinkArea(0, ((homepage != null) ? type.Length : 0));
@@ -106,7 +106,7 @@ namespace DSM.GUI.Forms {
 				}
 
 				if (!found) {
-					path_norm = Normalize.FilesystemPath(this.Context.Installation.Path);
+					path_norm = Normalize.FilesystemPath(this.Context.InstallationDirectory.Path);
 					if (!Directory.Exists(path_norm)) {
 						path_norm = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 					}

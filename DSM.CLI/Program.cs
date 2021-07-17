@@ -31,10 +31,10 @@ namespace DSM.CLI {
 
 					switch (args[1]) {
 						case "list":
-							foreach (Aircraft module in context.Installation.GetModules<Aircraft>()) {
+							foreach (Aircraft module in context.InstallationDirectory.GetModules<Aircraft>()) {
 								Console.WriteLine(module);
 							}
-							foreach (Terrain module in context.Installation.GetModules<Terrain>()) {
+							foreach (Terrain module in context.InstallationDirectory.GetModules<Terrain>()) {
 								Console.WriteLine(module);
 							}
 							break;
