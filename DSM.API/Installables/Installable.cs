@@ -13,6 +13,9 @@ namespace DSM.API.Installables {
 		public string Name { get; set; }
 		public string Path { get; set; }
 
+		public InstallType InstallType { get; set; }
+		public string InstallDirectory { get; set; }
+
 		public abstract string LuaFile { get; }
 
 		public string PathSlug { get => SlugHelper.GetSlug(this.Path); }

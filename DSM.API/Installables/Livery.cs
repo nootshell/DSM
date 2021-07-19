@@ -8,11 +8,13 @@ namespace DSM.API.Installables {
 
 	public class Livery : Installable {
 
-		public override string LuaFile => "description.lua";
+		public const string PLUGIN = "description.lua";
+		public override string LuaFile => PLUGIN;
 
 
 
 
+		public Livery() : base() { }
 		public Livery(string path) : base(path) { }
 
 

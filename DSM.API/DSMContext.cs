@@ -69,6 +69,9 @@ TODO: module -> info
                 archive
                 clean
 
+      config -> backups (+ advisory to external storage)
+                view/edit/copy?
+
       diagnostics -> analyze
 
  */

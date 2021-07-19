@@ -8,9 +8,8 @@ using Relua;
 using Relua.AST;
 
 using DSM.API.Utilities;
-
-
-
+using DSM.API.Directories.Subdirectories;
+using DSM.API.Directories;
 
 namespace DSM.API.Installables.Modules {
 
@@ -209,6 +208,26 @@ namespace DSM.API.Installables.Modules {
 
 			this.AddFilesystemSlug(slug);
 		}
+
+
+
+
+		public IEnumerable<Livery> GetLiveries(LiveryDirectory directory, int slugIndex)
+			=> directory.GetLiveries(this, slugIndex);
+
+		public IEnumerable<Livery> GetLiveries(StateDirectory directory, int slugIndex)
+			=> this.GetLiveries(directory.Liveries, slugIndex);
+
+		public IEnumerable<Livery> GetLiveries(LiveryDirectory directory) {
+			for (int i = this.FilesystemSlugs.Length; i-- > 0;) {
+				foreach (Livery livery in this.GetLiveries(directory, i)) {
+					yield return livery;
+				}
+			}
+		}
+
+		public IEnumerable<Livery> GetLiveries(StateDirectory directory)
+			=> this.GetLiveries(directory.Liveries);
 
 
 

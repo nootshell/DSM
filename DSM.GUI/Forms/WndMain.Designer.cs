@@ -56,6 +56,11 @@ namespace DSM.GUI.Forms {
 			this.lblModuleInfoInstallationPathValue = new System.Windows.Forms.LinkLabel();
 			this.lblModuleInfoInstallationPath = new System.Windows.Forms.Label();
 			this.tpModuleLiveries = new System.Windows.Forms.TabPage();
+			this.lvLiveries = new System.Windows.Forms.ListView();
+			this.chLiveriesName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.chLiveriesMethod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.chLiveriesSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.chLiveriesUnder = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tpModuleCountermeasures = new System.Windows.Forms.TabPage();
 			this.tcModule = new System.Windows.Forms.TabControl();
 			this.lblNoModuleSelected = new System.Windows.Forms.Label();
@@ -69,6 +74,7 @@ namespace DSM.GUI.Forms {
 			this.gbModuleInfoDetails.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbModuleInfoIcon)).BeginInit();
 			this.gbModuleInfoInstallation.SuspendLayout();
+			this.tpModuleLiveries.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menu
@@ -140,6 +146,7 @@ namespace DSM.GUI.Forms {
 			// 
 			this.tvModules.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tvModules.FullRowSelect = true;
+			this.tvModules.HideSelection = false;
 			this.tvModules.Location = new System.Drawing.Point(0, 0);
 			this.tvModules.Name = "tvModules";
 			this.tvModules.PathSeparator = "/";
@@ -218,10 +225,10 @@ namespace DSM.GUI.Forms {
 			this.gbModuleInfoDetails.Controls.Add(this.lblModuleInformationDetailsDeveloper);
 			this.gbModuleInfoDetails.Controls.Add(this.lblModuleInfoDetailsNameValue);
 			this.gbModuleInfoDetails.Controls.Add(this.lblModuleInfoDetailsName);
-			this.gbModuleInfoDetails.Location = new System.Drawing.Point(6, 46);
+			this.gbModuleInfoDetails.Location = new System.Drawing.Point(2, 46);
 			this.gbModuleInfoDetails.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
 			this.gbModuleInfoDetails.Name = "gbModuleInfoDetails";
-			this.gbModuleInfoDetails.Size = new System.Drawing.Size(669, 460);
+			this.gbModuleInfoDetails.Size = new System.Drawing.Size(678, 467);
 			this.gbModuleInfoDetails.TabIndex = 1;
 			this.gbModuleInfoDetails.TabStop = false;
 			this.gbModuleInfoDetails.Text = "Details";
@@ -261,7 +268,7 @@ namespace DSM.GUI.Forms {
 			this.lblModuleInfoDetailsDescriptionValue.Location = new System.Drawing.Point(9, 108);
 			this.lblModuleInfoDetailsDescriptionValue.Margin = new System.Windows.Forms.Padding(6);
 			this.lblModuleInfoDetailsDescriptionValue.Name = "lblModuleInfoDetailsDescriptionValue";
-			this.lblModuleInfoDetailsDescriptionValue.Size = new System.Drawing.Size(651, 343);
+			this.lblModuleInfoDetailsDescriptionValue.Size = new System.Drawing.Size(660, 350);
 			this.lblModuleInfoDetailsDescriptionValue.TabIndex = 9;
 			this.lblModuleInfoDetailsDescriptionValue.Text = "DESCRIPTION";
 			// 
@@ -343,10 +350,10 @@ namespace DSM.GUI.Forms {
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gbModuleInfoInstallation.Controls.Add(this.lblModuleInfoInstallationPathValue);
 			this.gbModuleInfoInstallation.Controls.Add(this.lblModuleInfoInstallationPath);
-			this.gbModuleInfoInstallation.Location = new System.Drawing.Point(6, 3);
+			this.gbModuleInfoInstallation.Location = new System.Drawing.Point(2, 3);
 			this.gbModuleInfoInstallation.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
 			this.gbModuleInfoInstallation.Name = "gbModuleInfoInstallation";
-			this.gbModuleInfoInstallation.Size = new System.Drawing.Size(669, 37);
+			this.gbModuleInfoInstallation.Size = new System.Drawing.Size(678, 37);
 			this.gbModuleInfoInstallation.TabIndex = 0;
 			this.gbModuleInfoInstallation.TabStop = false;
 			this.gbModuleInfoInstallation.Text = "Installation";
@@ -359,7 +366,7 @@ namespace DSM.GUI.Forms {
 			this.lblModuleInfoInstallationPathValue.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
 			this.lblModuleInfoInstallationPathValue.Location = new System.Drawing.Point(44, 16);
 			this.lblModuleInfoInstallationPathValue.Name = "lblModuleInfoInstallationPathValue";
-			this.lblModuleInfoInstallationPathValue.Size = new System.Drawing.Size(619, 13);
+			this.lblModuleInfoInstallationPathValue.Size = new System.Drawing.Size(628, 13);
 			this.lblModuleInfoInstallationPathValue.TabIndex = 1;
 			this.lblModuleInfoInstallationPathValue.TabStop = true;
 			this.lblModuleInfoInstallationPathValue.Text = "PATH";
@@ -376,6 +383,7 @@ namespace DSM.GUI.Forms {
 			// 
 			// tpModuleLiveries
 			// 
+			this.tpModuleLiveries.Controls.Add(this.lvLiveries);
 			this.tpModuleLiveries.Location = new System.Drawing.Point(4, 22);
 			this.tpModuleLiveries.Name = "tpModuleLiveries";
 			this.tpModuleLiveries.Size = new System.Drawing.Size(683, 514);
@@ -383,6 +391,50 @@ namespace DSM.GUI.Forms {
 			this.tpModuleLiveries.Tag = "Aircraft";
 			this.tpModuleLiveries.Text = "Liveries";
 			this.tpModuleLiveries.UseVisualStyleBackColor = true;
+			// 
+			// lvLiveries
+			// 
+			this.lvLiveries.Activation = System.Windows.Forms.ItemActivation.OneClick;
+			this.lvLiveries.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lvLiveries.CheckBoxes = true;
+			this.lvLiveries.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chLiveriesName,
+            this.chLiveriesUnder,
+            this.chLiveriesMethod,
+            this.chLiveriesSize});
+			this.lvLiveries.FullRowSelect = true;
+			this.lvLiveries.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lvLiveries.HideSelection = false;
+			this.lvLiveries.Location = new System.Drawing.Point(3, 81);
+			this.lvLiveries.MultiSelect = false;
+			this.lvLiveries.Name = "lvLiveries";
+			this.lvLiveries.Size = new System.Drawing.Size(677, 433);
+			this.lvLiveries.Sorting = System.Windows.Forms.SortOrder.Ascending;
+			this.lvLiveries.TabIndex = 0;
+			this.lvLiveries.UseCompatibleStateImageBehavior = false;
+			this.lvLiveries.View = System.Windows.Forms.View.Details;
+			// 
+			// chLiveriesName
+			// 
+			this.chLiveriesName.Text = "Name";
+			this.chLiveriesName.Width = 100;
+			// 
+			// chLiveriesMethod
+			// 
+			this.chLiveriesMethod.Text = "Method";
+			this.chLiveriesMethod.Width = 98;
+			// 
+			// chLiveriesSize
+			// 
+			this.chLiveriesSize.Text = "Size";
+			this.chLiveriesSize.Width = 83;
+			// 
+			// chLiveriesUnder
+			// 
+			this.chLiveriesUnder.Text = "Under";
+			this.chLiveriesUnder.Width = 102;
 			// 
 			// tpModuleCountermeasures
 			// 
@@ -435,6 +487,7 @@ namespace DSM.GUI.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.pbModuleInfoIcon)).EndInit();
 			this.gbModuleInfoInstallation.ResumeLayout(false);
 			this.gbModuleInfoInstallation.PerformLayout();
+			this.tpModuleLiveries.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -476,5 +529,10 @@ namespace DSM.GUI.Forms {
 		private System.Windows.Forms.LinkLabel lblModuleInfoInstallationPathValue;
 		private System.Windows.Forms.Label lblModuleInfoInstallationPath;
 		private System.Windows.Forms.PictureBox pbModuleInfoIcon;
+		private System.Windows.Forms.ListView lvLiveries;
+		private System.Windows.Forms.ColumnHeader chLiveriesName;
+		private System.Windows.Forms.ColumnHeader chLiveriesMethod;
+		private System.Windows.Forms.ColumnHeader chLiveriesSize;
+		private System.Windows.Forms.ColumnHeader chLiveriesUnder;
 	}
 }

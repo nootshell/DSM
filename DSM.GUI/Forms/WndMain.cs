@@ -8,6 +8,8 @@ using DSM.API.Installables.Modules;
 using DSM.API.Utilities;
 using DSM.GUI.Utilities;
 using DSM.API.Directories;
+using DSM.API.Directories.Subdirectories;
+using DSM.API.Installables;
 
 namespace DSM.GUI.Forms {
 
@@ -108,11 +110,14 @@ namespace DSM.GUI.Forms {
 				"No description available."
 			);
 
+			this.moduleDataSource.CurrentItemChanged += this.ModuleDataSource_CurrentItemChanged;
+
 			this.UpdateTitle();
 		}
 
-
-
+		private void ModuleDataSource_CurrentItemChanged(object sender, EventArgs e) {
+			this.ReconfigureShownLiveries(this.SelectedModule);
+		}
 
 		protected void AddModuleDatabind(string moduleProperty, Control control, string controlProperty, string nullStr = "Unknown") {
 			_ = control.DataBindings.Add(
@@ -128,7 +133,7 @@ namespace DSM.GUI.Forms {
 
 
 
-		protected virtual TreeNode BuildModuleCategoryNode<TModule>(StateDirectory directory, ImageList imageList) where TModule : Module, new() {
+		protected virtual TreeNode BuildModuleCategoryNode<TModule>(ModuleDirectory directory, ImageList imageList) where TModule : Module, new() {
 			Type type;
 			string key_img;
 			TreeNode root = null;
@@ -163,7 +168,7 @@ namespace DSM.GUI.Forms {
 		}
 
 
-		protected virtual TreeNode BuildRootNode(string name, string imageKey, StateDirectory directory, ImageList imageList) {
+		protected virtual TreeNode BuildRootNode(string name, string imageKey, ModuleDirectory directory, ImageList imageList) {
 			TreeNode root = new TreeNode(name);
 			root.ImageKey = root.SelectedImageKey = imageKey;
 
@@ -194,6 +199,9 @@ namespace DSM.GUI.Forms {
 
 
 		protected void ReconfigureShownTabs(Module module) {
+			/*this.tcModule.SuspendLayout();*/
+
+			TabPage selected = this.tcModule.SelectedTab;
 			this.tcModule.TabPages.Clear();
 
 			Type type = module.GetType();
@@ -204,6 +212,34 @@ namespace DSM.GUI.Forms {
 					page.ImageKey = page.Text;
 				}
 			}
+
+			/*if (selected != null && this.tcModule.TabPages.Contains(selected)) {
+				this.tcModule.SelectTab(selected);
+			}
+
+			this.tcModule.Refresh();
+			this.tcModule.ResumeLayout();*/
+		}
+
+
+		protected ListViewItem MkListViewItem(Livery livery) {
+			return new ListViewItem(new string[] {
+				livery.Name,
+				livery.InstallDirectory,
+				livery.InstallType.ToString(),
+				"",
+			});
+		}
+
+
+		protected void ReconfigureShownLiveries(Module module) {
+			this.lvLiveries.Items.Clear();
+
+			foreach (Livery livery in module.GetLiveries(this.Context.StateDirectory)) {
+				_ = this.lvLiveries.Items.Add(this.MkListViewItem(livery));
+			}
+
+			this.lvLiveries.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 		}
 
 
@@ -238,8 +274,8 @@ namespace DSM.GUI.Forms {
 				);
 			}
 
-			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.CORE, Strings.CORE, this.Context.InstallationDirectory, this.tvModules.ImageList));
-			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.MODS, Strings.MODS, this.Context.StateDirectory, this.tvModules.ImageList));
+			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.CORE, Strings.CORE, this.Context.InstallationDirectory.Mods, this.tvModules.ImageList));
+			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.MODS, Strings.MODS, this.Context.StateDirectory.Mods, this.tvModules.ImageList));
 
 			this.tvModules.SelectedNode = this.tvModules.Nodes[0];
 
