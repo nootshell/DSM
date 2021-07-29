@@ -1,9 +1,11 @@
-using DSM.API.Installables;
-using DSM.API.Installables.Modules;
+using DSM.API.Plugins;
+using DSM.API.Plugins.Base;
+using DSM.API.Plugins.Modules;
 using DSM.API.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,21 +26,18 @@ namespace DSM.API.Directories.Subdirectories {
 			}
 
 			foreach (string file in Directory.EnumerateFiles(path_fs, "*.zip", SearchOption.TopDirectoryOnly)) {
-				// TODO
-				break;
+				yield return new Livery(file, true);
 			}
 
+			string entry = Plugin.GetEntryFile<Livery>();
 			string path_plugin;
 			foreach (string dir in Directory.GetDirectories(path_fs)) {
-				path_plugin = Normalize.FilesystemPath($"{dir}/{Livery.PLUGIN}");
+				path_plugin = Normalize.FilesystemPath($"{dir}/{entry}");
 				if (!File.Exists(Normalize.FilesystemPath(path_plugin))) {
 					continue;
 				}
 
-				yield return new Livery(dir) {
-					InstallType = InstallType.Filesystem,
-					InstallDirectory = subdir
-				};
+				yield return new Livery(dir, true);
 			}
 		}
 

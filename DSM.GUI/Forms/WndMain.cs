@@ -4,12 +4,12 @@ using System.Windows.Forms;
 using static System.Windows.Forms.Menu;
 
 using DSM.API;
-using DSM.API.Installables.Modules;
+using DSM.API.Plugins.Modules;
 using DSM.API.Utilities;
 using DSM.GUI.Utilities;
 using DSM.API.Directories;
 using DSM.API.Directories.Subdirectories;
-using DSM.API.Installables;
+using DSM.API.Plugins;
 
 namespace DSM.GUI.Forms {
 
@@ -68,9 +68,9 @@ namespace DSM.GUI.Forms {
 			);
 
 			this.AddModuleDatabind(
-				nameof(this.SelectedModule.IconPathAbsolute),
+				nameof(this.SelectedModule.Icon),
 				this.pbModuleInfoIcon,
-				nameof(this.pbModuleInfoIcon.ImageLocation)
+				nameof(this.pbModuleInfoIcon.Image)
 			);
 
 			this.AddModuleDatabind(
@@ -135,6 +135,7 @@ namespace DSM.GUI.Forms {
 
 		protected virtual TreeNode BuildModuleCategoryNode<TModule>(ModuleDirectory directory, ImageList imageList) where TModule : Module, new() {
 			Type type;
+			Image icon;
 			string key_img;
 			TreeNode root = null;
 			foreach (TModule module in directory.GetModules<TModule>()) {
@@ -144,16 +145,12 @@ namespace DSM.GUI.Forms {
 				}
 
 				key_img = null;
+				icon = module.Icon;
 
-				if (module.IconPath != null) {
-					key_img = module.PathSlug; // FIXME?
+				if (icon != null) {
+					key_img = SlugHelper.GetSlug(module.Path); // FIXME?
 
-					imageList.Images.Add(
-						key_img,
-						Image.FromFile(
-							Normalize.FilesystemPath($"{module.Path}/{module.IconPath}")
-						)
-					);
+					imageList.Images.Add(key_img, icon);
 				}
 
 				_ = root.Nodes.Add(new TreeNode(module.GetName()) { ImageKey = key_img, SelectedImageKey = key_img, Tag = module });
@@ -199,9 +196,9 @@ namespace DSM.GUI.Forms {
 
 
 		protected void ReconfigureShownTabs(Module module) {
-			/*this.tcModule.SuspendLayout();*/
+			/*this.tcModule.SuspendLayout();
 
-			TabPage selected = this.tcModule.SelectedTab;
+			TabPage selected = this.tcModule.SelectedTab;*/
 			this.tcModule.TabPages.Clear();
 
 			Type type = module.GetType();
@@ -225,8 +222,8 @@ namespace DSM.GUI.Forms {
 		protected ListViewItem MkListViewItem(Livery livery) {
 			return new ListViewItem(new string[] {
 				livery.Name,
-				livery.InstallDirectory,
-				livery.InstallType.ToString(),
+				SlugHelper.GetSlug(livery.Path),
+				livery.GetPrimaryPathInfo().Type.ToString(),
 				"",
 			});
 		}

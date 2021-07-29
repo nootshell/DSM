@@ -1,5 +1,5 @@
 using DSM.API.Extensions;
-using DSM.API.Installables.Modules;
+using DSM.API.Plugins.Modules;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,7 +37,7 @@ namespace DSM.API.Directories.Subdirectories {
 				module = null;
 				try {
 					module = new TModule();
-					module.ctor(directory);
+					module.alt_ctor(directory, true);
 				} catch (Relua.ParserException) {
 					Console.WriteLine($"Parser exception in {directory}");
 					continue;

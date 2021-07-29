@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 
 
-namespace DSM.API.Installables.Modules {
+namespace DSM.API.Plugins.Modules {
 
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 	public class ModuleCategoryAttribute : Attribute {

@@ -1,7 +1,7 @@
 using System;
 
 using DSM.API;
-using DSM.API.Installables.Modules;
+using DSM.API.Plugins.Modules;
 
 
 

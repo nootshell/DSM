@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DSM.API.Directories.Subdirectories;
 using DSM.API.Extensions;
-using DSM.API.Installables;
-using DSM.API.Installables.Modules;
+using DSM.API.Plugins;
+using DSM.API.Plugins.Modules;
 using DSM.API.Utilities;
 
 

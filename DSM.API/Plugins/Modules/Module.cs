@@ -10,19 +10,19 @@ using Relua.AST;
 using DSM.API.Utilities;
 using DSM.API.Directories.Subdirectories;
 using DSM.API.Directories;
+using DSM.API.Plugins.Base;
+using System.Drawing;
 
-namespace DSM.API.Installables.Modules {
+namespace DSM.API.Plugins.Modules {
 
-	public abstract class Module : Installable {
+	[PluginEntryFile("entry.lua")]
+	public abstract class Module : Plugin {
 
 		private static readonly string[] IconPaths = new string[] {
 			"Theme/icon.png",
 			"Skins/icon.png",
 			"Skins/1/icon.png",
 		};
-
-		// TODO: move this to an attribute
-		public override string LuaFile => "entry.lua";
 
 		public string UpdateSlug { get; set; }
 		public string[] FilesystemSlugs { get; set; }
@@ -33,16 +33,27 @@ namespace DSM.API.Installables.Modules {
 		public string Info { get; set; }
 		public string Version { get; set; }
 
-		public bool Installed { get; set; }
+		public string Name { get; set; }
 
-		public string IconPath { get; set; }
-		public string IconPathAbsolute => ((this.IconPath != null) ? Normalize.FilesystemPath($"{this.Path}/{this.IconPath}") : null);
+
+
+
+		private Image __icon;
+		public Image Icon {
+			get {
+				if (this.__icon == null) {
+					this.__icon = this.GetIcon();
+				}
+
+				return this.__icon;
+			}
+		}
 
 
 
 
 		protected Module() : base() { }
-		protected Module(string path) : base(path) { }
+		protected Module(string path, bool installed) : base(path, installed) { }
 
 
 
@@ -68,7 +79,8 @@ namespace DSM.API.Installables.Modules {
 			foreach (TableConstructor.Entry entry in ctor.Entries) {
 				string key = LuaHelper.GetExpressionStringValue(entry.Key);
 
-				if (entry.Value is BoolLiteral boolLiteral) {
+				// XXX: Disabled bool parsing for now, installation status is provided by the Plugin base class
+				if (false) {/*entry.Value is BoolLiteral boolLiteral) {
 					bool value = boolLiteral.Value;
 
 					switch (key) {
@@ -78,7 +90,7 @@ namespace DSM.API.Installables.Modules {
 							break;
 
 						default: break;
-					}
+					}*/
 				} else {
 					string value = LuaHelper.GetExpressionStringValue(entry.Value);
 
@@ -101,9 +113,9 @@ namespace DSM.API.Installables.Modules {
 								this.UpdateSlug = value;
 								break;
 
-							case "state":
+							/*case "state": // Rendered invalid for now, TODO: figure out if state means more than just installed or not installed
 								this.Installed = (value == "installed");
-								break;
+								break;*/
 
 							case "version":
 								this.Version = value;
@@ -136,14 +148,7 @@ namespace DSM.API.Installables.Modules {
 
 
 
-		protected override void InitFromLuaBlock(Block block) {
-			foreach (string icon in IconPaths) {
-				if (File.Exists(Normalize.FilesystemPath($"{this.Path}/{icon}"))) {
-					this.IconPath = icon;
-					break;
-				}
-			}
-
+		protected override void InitFromEntryFileBlock(Block block) {
 			foreach (IStatement statement in block.Statements) {
 				if (statement is FunctionCall functionCall) {
 					Variable fn = (Variable)functionCall.Function;
@@ -165,7 +170,7 @@ namespace DSM.API.Installables.Modules {
 
 
 		protected void FinalizeInit() {
-			this.AddFilesystemSlugIfNone(this.PathSlug);
+			this.AddFilesystemSlugIfNone(this.GetPrimaryPathInfo().Slug);
 			this.FilesystemSlugs = this.filesystemSlugs.ToArray();
 		}
 
@@ -228,6 +233,27 @@ namespace DSM.API.Installables.Modules {
 
 		public IEnumerable<Livery> GetLiveries(StateDirectory directory)
 			=> this.GetLiveries(directory.Liveries);
+
+
+
+
+		protected virtual Image GetIcon() {
+			PluginPathInfo path = this.GetPrimaryPathInfo();
+
+			foreach (string iconpath in IconPaths) {
+				try {
+					using (Stream stream = path.GetFileStream(iconpath)) {
+						if (stream == null) {
+							continue;
+						}
+
+						return Image.FromStream(stream);
+					}
+				} catch { }
+			}
+
+			return null;
+		}
 
 
 

@@ -8,4 +8,8 @@
     <ProjectReference Include="..\Relua\Relua.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.IO.Compression" />
+  </ItemGroup>
+
 </Project>

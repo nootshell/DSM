@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSM.API.Installables {
+namespace DSM.API.Plugins.Base {
 
-	public enum InstallType {
+	public enum PluginPathType {
 		Unknown = 0,
+		Auto = 1,
 
-		Filesystem = 1,
-		Archive = 2
+		Directory = 2,
+		ZipArchive = 3
 	}
 
 }
