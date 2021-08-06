@@ -11,6 +11,7 @@ using DSM.API.Directories;
 using DSM.API.Directories.Subdirectories;
 using DSM.API.Plugins;
 using System.IO;
+using DSM.API.Extensions;
 
 namespace DSM.GUI.Forms {
 
@@ -224,7 +225,7 @@ namespace DSM.GUI.Forms {
 			return new ListViewItem(new string[] {
 				livery.Name,
 				SlugHelper.GetSlug(livery.Path),
-				livery.GetPrimaryPathInfo().Type.ToString(),
+				livery.GetPrimaryPathInfo().Type.ToDescriptiveString(),
 				Humanize.FileSize(livery.GetPrimaryPathInfo().Size)
 			});
 		}
