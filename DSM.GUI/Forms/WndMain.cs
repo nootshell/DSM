@@ -224,9 +224,9 @@ namespace DSM.GUI.Forms {
 		protected ListViewItem MkListViewItem(Livery livery) {
 			return new ListViewItem(new string[] {
 				livery.Name,
-				SlugHelper.GetSlug(livery.Path),
-				livery.GetPrimaryPathInfo().Type.ToDescriptiveString(),
-				Humanize.FileSize(livery.GetPrimaryPathInfo().Size)
+				livery.Slug,
+				livery.Type.ToDescriptiveString(),
+				Humanize.FileSize(livery.Size)
 			});
 		}
 

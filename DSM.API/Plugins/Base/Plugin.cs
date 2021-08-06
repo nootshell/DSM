@@ -27,6 +27,18 @@ namespace DSM.API.Plugins.Base {
 			get => this.GetPrimaryPathInfo().Path;
 		}
 
+		public string Slug {
+			get => this.GetPrimaryPathInfo().Slug;
+		}
+
+		public ulong Size {
+			get => this.GetPrimaryPathInfo().Size;
+		}
+
+		public PluginPathType Type {
+			get => this.GetPrimaryPathInfo().Type;
+		}
+
 
 
 
