@@ -56,11 +56,18 @@ namespace DSM.GUI.Forms {
 			this.lblModuleInfoInstallationPathValue = new System.Windows.Forms.LinkLabel();
 			this.lblModuleInfoInstallationPath = new System.Windows.Forms.Label();
 			this.tpModuleLiveries = new System.Windows.Forms.TabPage();
+			this.grpLiveriesManage = new System.Windows.Forms.GroupBox();
+			this.btnLiveriesExplore = new System.Windows.Forms.Button();
+			this.btnLiveriesRefresh = new System.Windows.Forms.Button();
+			this.btnLiveriesUninstall = new System.Windows.Forms.Button();
+			this.btnLiveriesEnable = new System.Windows.Forms.Button();
+			this.btnLiveriesDisable = new System.Windows.Forms.Button();
+			this.btnLiveriesInstall = new System.Windows.Forms.Button();
 			this.lvLiveries = new System.Windows.Forms.ListView();
 			this.chLiveriesName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.chLiveriesUnder = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.chLiveriesMethod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.chLiveriesSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.chLiveriesUnder = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tpModuleCountermeasures = new System.Windows.Forms.TabPage();
 			this.tcModule = new System.Windows.Forms.TabControl();
 			this.lblNoModuleSelected = new System.Windows.Forms.Label();
@@ -75,6 +82,7 @@ namespace DSM.GUI.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.pbModuleInfoIcon)).BeginInit();
 			this.gbModuleInfoInstallation.SuspendLayout();
 			this.tpModuleLiveries.SuspendLayout();
+			this.grpLiveriesManage.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menu
@@ -383,6 +391,7 @@ namespace DSM.GUI.Forms {
 			// 
 			// tpModuleLiveries
 			// 
+			this.tpModuleLiveries.Controls.Add(this.grpLiveriesManage);
 			this.tpModuleLiveries.Controls.Add(this.lvLiveries);
 			this.tpModuleLiveries.Location = new System.Drawing.Point(4, 22);
 			this.tpModuleLiveries.Name = "tpModuleLiveries";
@@ -392,13 +401,90 @@ namespace DSM.GUI.Forms {
 			this.tpModuleLiveries.Text = "Liveries";
 			this.tpModuleLiveries.UseVisualStyleBackColor = true;
 			// 
+			// grpLiveriesManage
+			// 
+			this.grpLiveriesManage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.grpLiveriesManage.Controls.Add(this.btnLiveriesExplore);
+			this.grpLiveriesManage.Controls.Add(this.btnLiveriesRefresh);
+			this.grpLiveriesManage.Controls.Add(this.btnLiveriesUninstall);
+			this.grpLiveriesManage.Controls.Add(this.btnLiveriesEnable);
+			this.grpLiveriesManage.Controls.Add(this.btnLiveriesDisable);
+			this.grpLiveriesManage.Controls.Add(this.btnLiveriesInstall);
+			this.grpLiveriesManage.Location = new System.Drawing.Point(3, 3);
+			this.grpLiveriesManage.Name = "grpLiveriesManage";
+			this.grpLiveriesManage.Size = new System.Drawing.Size(677, 49);
+			this.grpLiveriesManage.TabIndex = 4;
+			this.grpLiveriesManage.TabStop = false;
+			this.grpLiveriesManage.Text = "Manage";
+			// 
+			// btnLiveriesExplore
+			// 
+			this.btnLiveriesExplore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnLiveriesExplore.Location = new System.Drawing.Point(516, 19);
+			this.btnLiveriesExplore.Name = "btnLiveriesExplore";
+			this.btnLiveriesExplore.Size = new System.Drawing.Size(75, 23);
+			this.btnLiveriesExplore.TabIndex = 5;
+			this.btnLiveriesExplore.Text = "Explore";
+			this.btnLiveriesExplore.UseVisualStyleBackColor = true;
+			this.btnLiveriesExplore.Click += new System.EventHandler(this.OnLiveriesExplore);
+			// 
+			// btnLiveriesRefresh
+			// 
+			this.btnLiveriesRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnLiveriesRefresh.Location = new System.Drawing.Point(597, 19);
+			this.btnLiveriesRefresh.Name = "btnLiveriesRefresh";
+			this.btnLiveriesRefresh.Size = new System.Drawing.Size(75, 23);
+			this.btnLiveriesRefresh.TabIndex = 4;
+			this.btnLiveriesRefresh.Text = "Refresh";
+			this.btnLiveriesRefresh.UseVisualStyleBackColor = true;
+			this.btnLiveriesRefresh.Click += new System.EventHandler(this.OnLiveriesRefresh);
+			// 
+			// btnLiveriesUninstall
+			// 
+			this.btnLiveriesUninstall.Enabled = false;
+			this.btnLiveriesUninstall.Location = new System.Drawing.Point(249, 19);
+			this.btnLiveriesUninstall.Name = "btnLiveriesUninstall";
+			this.btnLiveriesUninstall.Size = new System.Drawing.Size(75, 23);
+			this.btnLiveriesUninstall.TabIndex = 3;
+			this.btnLiveriesUninstall.Text = "Uninstall";
+			this.btnLiveriesUninstall.UseVisualStyleBackColor = true;
+			// 
+			// btnLiveriesEnable
+			// 
+			this.btnLiveriesEnable.Enabled = false;
+			this.btnLiveriesEnable.Location = new System.Drawing.Point(87, 19);
+			this.btnLiveriesEnable.Name = "btnLiveriesEnable";
+			this.btnLiveriesEnable.Size = new System.Drawing.Size(75, 23);
+			this.btnLiveriesEnable.TabIndex = 2;
+			this.btnLiveriesEnable.Text = "Enable";
+			this.btnLiveriesEnable.UseVisualStyleBackColor = true;
+			// 
+			// btnLiveriesDisable
+			// 
+			this.btnLiveriesDisable.Enabled = false;
+			this.btnLiveriesDisable.Location = new System.Drawing.Point(168, 19);
+			this.btnLiveriesDisable.Name = "btnLiveriesDisable";
+			this.btnLiveriesDisable.Size = new System.Drawing.Size(75, 23);
+			this.btnLiveriesDisable.TabIndex = 1;
+			this.btnLiveriesDisable.Text = "Disable";
+			this.btnLiveriesDisable.UseVisualStyleBackColor = true;
+			// 
+			// btnLiveriesInstall
+			// 
+			this.btnLiveriesInstall.Location = new System.Drawing.Point(6, 19);
+			this.btnLiveriesInstall.Name = "btnLiveriesInstall";
+			this.btnLiveriesInstall.Size = new System.Drawing.Size(75, 23);
+			this.btnLiveriesInstall.TabIndex = 0;
+			this.btnLiveriesInstall.Text = "Install...";
+			this.btnLiveriesInstall.UseVisualStyleBackColor = true;
+			// 
 			// lvLiveries
 			// 
-			this.lvLiveries.Activation = System.Windows.Forms.ItemActivation.OneClick;
 			this.lvLiveries.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.lvLiveries.CheckBoxes = true;
+			this.lvLiveries.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.lvLiveries.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chLiveriesName,
             this.chLiveriesUnder,
@@ -407,19 +493,26 @@ namespace DSM.GUI.Forms {
 			this.lvLiveries.FullRowSelect = true;
 			this.lvLiveries.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lvLiveries.HideSelection = false;
-			this.lvLiveries.Location = new System.Drawing.Point(3, 81);
+			this.lvLiveries.LabelWrap = false;
+			this.lvLiveries.Location = new System.Drawing.Point(3, 58);
 			this.lvLiveries.MultiSelect = false;
 			this.lvLiveries.Name = "lvLiveries";
-			this.lvLiveries.Size = new System.Drawing.Size(677, 433);
+			this.lvLiveries.Size = new System.Drawing.Size(677, 456);
 			this.lvLiveries.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.lvLiveries.TabIndex = 0;
 			this.lvLiveries.UseCompatibleStateImageBehavior = false;
 			this.lvLiveries.View = System.Windows.Forms.View.Details;
+			this.lvLiveries.SelectedIndexChanged += new System.EventHandler(this.OnSelectedLiveryChanged);
 			// 
 			// chLiveriesName
 			// 
 			this.chLiveriesName.Text = "Name";
 			this.chLiveriesName.Width = 100;
+			// 
+			// chLiveriesUnder
+			// 
+			this.chLiveriesUnder.Text = "Under";
+			this.chLiveriesUnder.Width = 102;
 			// 
 			// chLiveriesMethod
 			// 
@@ -430,11 +523,6 @@ namespace DSM.GUI.Forms {
 			// 
 			this.chLiveriesSize.Text = "Size";
 			this.chLiveriesSize.Width = 83;
-			// 
-			// chLiveriesUnder
-			// 
-			this.chLiveriesUnder.Text = "Under";
-			this.chLiveriesUnder.Width = 102;
 			// 
 			// tpModuleCountermeasures
 			// 
@@ -488,6 +576,7 @@ namespace DSM.GUI.Forms {
 			this.gbModuleInfoInstallation.ResumeLayout(false);
 			this.gbModuleInfoInstallation.PerformLayout();
 			this.tpModuleLiveries.ResumeLayout(false);
+			this.grpLiveriesManage.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -534,5 +623,12 @@ namespace DSM.GUI.Forms {
 		private System.Windows.Forms.ColumnHeader chLiveriesMethod;
 		private System.Windows.Forms.ColumnHeader chLiveriesSize;
 		private System.Windows.Forms.ColumnHeader chLiveriesUnder;
+		private System.Windows.Forms.GroupBox grpLiveriesManage;
+		private System.Windows.Forms.Button btnLiveriesInstall;
+		private System.Windows.Forms.Button btnLiveriesUninstall;
+		private System.Windows.Forms.Button btnLiveriesEnable;
+		private System.Windows.Forms.Button btnLiveriesDisable;
+		private System.Windows.Forms.Button btnLiveriesRefresh;
+		private System.Windows.Forms.Button btnLiveriesExplore;
 	}
 }

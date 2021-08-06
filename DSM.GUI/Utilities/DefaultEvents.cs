@@ -17,20 +17,22 @@ namespace DSM.GUI.Utilities {
 			_ = Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
 		}
 
-
-		public static void OnLinkClicked_Open(object sender, LinkLabelLinkClickedEventArgs e) {
-			ShellStart(GetLinkText(sender as LinkLabel));
-		}
-
-		public static void OnLinkClicked_OpenFolder(object sender, LinkLabelLinkClickedEventArgs e) {
-			string target = GetLinkText(sender as LinkLabel);
-
+		public static void ExploreFolder(string target) {
 			if (!Directory.Exists(target)) {
 				// TODO: error
 				return;
 			}
 
 			ShellStart(target);
+		}
+
+
+		public static void OnLinkClicked_Open(object sender, LinkLabelLinkClickedEventArgs e) {
+			ShellStart(GetLinkText(sender as LinkLabel));
+		}
+
+		public static void OnLinkClicked_OpenFolder(object sender, LinkLabelLinkClickedEventArgs e) {
+			ExploreFolder(GetLinkText(sender as LinkLabel));
 		}
 
 	}

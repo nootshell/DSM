@@ -10,6 +10,7 @@ using DSM.GUI.Utilities;
 using DSM.API.Directories;
 using DSM.API.Directories.Subdirectories;
 using DSM.API.Plugins;
+using System.IO;
 
 namespace DSM.GUI.Forms {
 
@@ -224,7 +225,7 @@ namespace DSM.GUI.Forms {
 				livery.Name,
 				SlugHelper.GetSlug(livery.Path),
 				livery.GetPrimaryPathInfo().Type.ToString(),
-				"",
+				Humanize.FileSize(livery.GetPrimaryPathInfo().Size)
 			});
 		}
 
@@ -346,6 +347,30 @@ namespace DSM.GUI.Forms {
 		private void OnLinkClicked_OpenFolder(object sender, LinkLabelLinkClickedEventArgs e)
 			=> DefaultEvents.OnLinkClicked_OpenFolder(sender, e);
 
+		private void OnLiveriesRefresh(object sender, EventArgs e)
+			=> this.ReconfigureShownLiveries(this.SelectedModule);
+
+		private void OnLiveriesExplore(object sender, EventArgs e) {
+			string path = Normalize.FilesystemPath($"{this.Context.StateDirectory.Path}/Liveries/{this.SelectedModule.GetFirstFilesystemSlug()}");
+
+			if (!Directory.Exists(path)) {
+				Directory.CreateDirectory(path);
+			}
+
+			DefaultEvents.ExploreFolder(path);
+		}
+
+		private void OnSelectedLiveryChanged(object sender, EventArgs e) {
+			ListView lv = (sender as ListView);
+			if (lv == null) {
+				return;
+			}
+
+			bool enabled = (lv.SelectedItems?.Count > 0);
+			btnLiveriesEnable.Enabled = enabled;
+			btnLiveriesDisable.Enabled = enabled;
+			btnLiveriesUninstall.Enabled = enabled;
+		}
 	}
 
 }
