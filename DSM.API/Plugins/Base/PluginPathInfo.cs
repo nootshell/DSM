@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DSM.API.Utilities;
 
+
+
+
 namespace DSM.API.Plugins.Base {
 
 	public abstract class PluginPathInfo : IDisposable {
@@ -14,19 +17,29 @@ namespace DSM.API.Plugins.Base {
 		public string Path { get; set; }
 		public PluginPathType Type { get; set; }
 
+		protected FileSystemInfo FsInfo { get; set; }
 		protected IDisposable Disposable { get; set; }
 
 		public string Slug { get => SlugHelper.GetSlug(this.Path); }
 
-
-
-
-		protected PluginPathInfo() : base() { }
-
-		public PluginPathInfo(string path, PluginPathType type) : this() {
-			this.Path = Normalize.FilesystemPath(path);
-			this.Type = ResolvePathType(path, type);
+		public ulong Size {
+			get {
+				if (this.FsInfo is FileInfo file) {
+					return (ulong)file.Length;
+				} else if (this.FsInfo is DirectoryInfo directory) {
+					ulong size = 0;
+					foreach (FileInfo f in directory.EnumerateFiles("*", SearchOption.AllDirectories)) {
+						size += (ulong)f.Length;
+					}
+					return size;
+				} else {
+					return 0;
+				}
+			}
 		}
+
+
+
 
 		public static PluginPathType ResolvePathType(string path, PluginPathType hint) {
 			switch (hint) {
@@ -47,6 +60,30 @@ namespace DSM.API.Plugins.Base {
 			}
 
 			return PluginPathType.Unknown;
+		}
+
+
+
+
+		protected PluginPathInfo() : base() { }
+
+		public PluginPathInfo(string path, PluginPathType type) : this() {
+			this.Path = Normalize.FilesystemPath(path);
+			this.Type = ResolvePathType(path, type);
+
+			switch (this.Type) {
+				case PluginPathType.Directory:
+					this.FsInfo = new DirectoryInfo(this.Path);
+					break;
+				case PluginPathType.ZipArchive:
+					this.FsInfo = new FileInfo(this.Path);
+					break;
+			}
+		}
+
+		internal virtual void FinalizeInit() {
+			this.Disposable?.Dispose();
+			this.Disposable = null;
 		}
 
 

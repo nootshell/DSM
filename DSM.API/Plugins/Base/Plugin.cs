@@ -91,6 +91,13 @@ namespace DSM.API.Plugins.Base {
 			=> this.alt_ctor(path, PluginPathType.Auto, installed);
 
 
+		internal virtual void FinalizeInit() {
+			// TODO: this.Source?.FinalizeInit(installIntended);
+			// for now keep sources open, since those are most likely going to be installed and therefore reopened
+			this.Target?.FinalizeInit();
+		}
+
+
 
 
 		public virtual PluginPathInfo GetPrimaryPathInfo()
@@ -109,6 +116,8 @@ namespace DSM.API.Plugins.Base {
 					this.InitFromEntryFileBlock((new Parser(reader)).Read());
 				}
 			}
+
+			this.FinalizeInit();
 		}
 
 

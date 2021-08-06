@@ -169,7 +169,9 @@ namespace DSM.API.Plugins.Modules {
 		}
 
 
-		protected void FinalizeInit() {
+		internal override void FinalizeInit() {
+			base.FinalizeInit();
+
 			this.AddFilesystemSlugIfNone(this.GetPrimaryPathInfo().Slug);
 			this.FilesystemSlugs = this.filesystemSlugs.ToArray();
 		}
