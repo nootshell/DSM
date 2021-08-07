@@ -17,8 +17,8 @@ namespace DSM.API.Directories.Subdirectories {
 
 
 
-		public IEnumerable<TModule> GetModules<TModule>() where TModule : Module, new() {
-			ModuleCategoryAttribute attr = typeof(TModule).GetAttribute<ModuleCategoryAttribute>(false);
+		public IEnumerable<Module> GetModules(Type tmodule) {
+			ModuleCategoryAttribute attr = tmodule.GetAttribute<ModuleCategoryAttribute>(false);
 			if (attr == null) {
 				throw new InvalidOperationException();
 			}
@@ -28,7 +28,7 @@ namespace DSM.API.Directories.Subdirectories {
 				yield break;
 			}
 
-			TModule module;
+			Module module;
 			foreach (string directory in Directory.GetDirectories(path)) {
 				if (!File.Exists($"{directory}/entry.lua")) {
 					continue;
@@ -36,7 +36,7 @@ namespace DSM.API.Directories.Subdirectories {
 
 				module = null;
 				try {
-					module = new TModule();
+					module = (Module)Activator.CreateInstance(tmodule);
 					module.alt_ctor(directory, true);
 				} catch (Relua.ParserException) {
 					Console.WriteLine($"Parser exception in {directory}");
@@ -46,6 +46,12 @@ namespace DSM.API.Directories.Subdirectories {
 				if (module != null) {
 					yield return module;
 				}
+			}
+		}
+
+		public IEnumerable<TModule> GetModules<TModule>() where TModule : Module, new() {
+			foreach (Module module in this.GetModules(typeof(TModule))) {
+				yield return (TModule)module;
 			}
 		}
 

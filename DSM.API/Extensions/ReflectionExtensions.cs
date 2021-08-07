@@ -36,6 +36,23 @@ namespace DSM.API.Extensions {
 			return s_value;
 		}
 
+
+
+
+		public static IEnumerable<Type> GetDerivativeTypes(this Type type, Assembly assembly = null) {
+			if (assembly == null) {
+				assembly = Assembly.GetAssembly(type);
+			}
+
+			foreach (Type t in assembly.GetTypes()) {
+				if (!t.IsSubclassOf(type)) {
+					continue;
+				}
+
+				yield return t;
+			}
+		}
+
 	}
 
 }

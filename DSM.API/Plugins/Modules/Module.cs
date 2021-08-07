@@ -12,6 +12,7 @@ using DSM.API.Directories.Subdirectories;
 using DSM.API.Directories;
 using DSM.API.Plugins.Base;
 using System.Drawing;
+using DSM.API.Extensions;
 
 namespace DSM.API.Plugins.Modules {
 
@@ -23,6 +24,8 @@ namespace DSM.API.Plugins.Modules {
 			"Skins/icon.png",
 			"Skins/1/icon.png",
 		};
+
+		public static readonly Type[] DerivativeTypes = typeof(Module).GetDerivativeTypes().ToArray();
 
 		public string UpdateSlug { get; set; }
 		public string[] FilesystemSlugs { get; set; }

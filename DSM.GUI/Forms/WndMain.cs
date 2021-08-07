@@ -14,6 +14,9 @@ using System.IO;
 using DSM.API.Extensions;
 using System.Linq;
 using DSM.API.Plugins.Base;
+using System.Reflection;
+
+using Module = DSM.API.Plugins.Modules.Module;
 
 namespace DSM.GUI.Forms {
 
@@ -138,12 +141,12 @@ namespace DSM.GUI.Forms {
 
 
 
-		protected virtual TreeNode BuildModuleCategoryNode<TModule>(ModuleDirectory directory, ImageList imageList) where TModule : Module, new() {
+		protected virtual TreeNode BuildModuleCategoryNode(Type tmodule, ModuleDirectory directory, ImageList imageList) {
 			Type type;
 			Image icon;
 			string key_img;
 			TreeNode root = null;
-			foreach (TModule module in directory.GetModules<TModule>()) {
+			foreach (Module module in directory.GetModules(tmodule)) {
 				if (root == null) {
 					type = module.GetType();
 					root = new TreeNode(type.Name) { Tag = type };
@@ -162,7 +165,7 @@ namespace DSM.GUI.Forms {
 			}
 
 			if (root != null) {
-				root.ImageKey = root.SelectedImageKey = typeof(TModule).Name;
+				root.ImageKey = root.SelectedImageKey = tmodule.Name;
 				root.Expand();
 			}
 
@@ -177,16 +180,12 @@ namespace DSM.GUI.Forms {
 			bool any = false;
 			TreeNode node;
 
-			node = this.BuildModuleCategoryNode<Aircraft>(directory, imageList);
-			if (node != null) {
-				any = true;
-				_ = root.Nodes.Add(node);
-			}
-
-			node = this.BuildModuleCategoryNode<Terrain>(directory, imageList);
-			if (node != null) {
-				any = true;
-				_ = root.Nodes.Add(node);
+			foreach (Type type in Module.DerivativeTypes) {
+				node = this.BuildModuleCategoryNode(type, directory, imageList);
+				if (node != null) {
+					any = true;
+					_ = root.Nodes.Add(node);
+				}
 			}
 
 			if (!any) {
