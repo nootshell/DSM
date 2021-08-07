@@ -12,6 +12,8 @@ using DSM.API.Directories.Subdirectories;
 using DSM.API.Plugins;
 using System.IO;
 using DSM.API.Extensions;
+using System.Linq;
+using DSM.API.Plugins.Base;
 
 namespace DSM.GUI.Forms {
 
@@ -111,6 +113,7 @@ namespace DSM.GUI.Forms {
 				nameof(this.lblModuleInfoDetailsDescriptionValue.Text),
 				"No description available."
 			);
+
 
 			this.moduleDataSource.CurrentItemChanged += this.ModuleDataSource_CurrentItemChanged;
 
@@ -224,10 +227,11 @@ namespace DSM.GUI.Forms {
 		protected ListViewItem MkListViewItem(Livery livery) {
 			return new ListViewItem(new string[] {
 				livery.Name,
-				livery.Slug,
+				livery.PathSlug,
 				livery.Type.ToDescriptiveString(),
 				Humanize.FileSize(livery.Size)
 			});
+
 		}
 
 
@@ -239,6 +243,7 @@ namespace DSM.GUI.Forms {
 			}
 
 			this.lvLiveries.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+			this.OnSelectedLiveryChanged(this.lvLiveries, null);
 		}
 
 
@@ -371,6 +376,24 @@ namespace DSM.GUI.Forms {
 			btnLiveriesEnable.Enabled = enabled;
 			btnLiveriesDisable.Enabled = enabled;
 			btnLiveriesUninstall.Enabled = enabled;
+		}
+
+		private void OnLiveriesInstall(object sender, EventArgs e) {
+			using (OpenFileDialog dialog = new OpenFileDialog()) {
+				dialog.Filter = string.Join("|", new string[] {
+					"Zip Files|*.zip"
+				});
+				dialog.FilterIndex = 1;
+				dialog.RestoreDirectory = true;
+
+				if (dialog.ShowDialog() == DialogResult.OK) {
+					Livery livery = new Livery(dialog.FileName, false);
+
+					using (WndInstall wnd = new WndInstall(livery)) {
+						wnd.ShowDialog();
+					}
+				}
+			}
 		}
 	}
 

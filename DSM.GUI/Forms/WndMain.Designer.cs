@@ -233,10 +233,10 @@ namespace DSM.GUI.Forms {
 			this.gbModuleInfoDetails.Controls.Add(this.lblModuleInformationDetailsDeveloper);
 			this.gbModuleInfoDetails.Controls.Add(this.lblModuleInfoDetailsNameValue);
 			this.gbModuleInfoDetails.Controls.Add(this.lblModuleInfoDetailsName);
-			this.gbModuleInfoDetails.Location = new System.Drawing.Point(2, 46);
+			this.gbModuleInfoDetails.Location = new System.Drawing.Point(2, 45);
 			this.gbModuleInfoDetails.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
 			this.gbModuleInfoDetails.Name = "gbModuleInfoDetails";
-			this.gbModuleInfoDetails.Size = new System.Drawing.Size(678, 467);
+			this.gbModuleInfoDetails.Size = new System.Drawing.Size(678, 468);
 			this.gbModuleInfoDetails.TabIndex = 1;
 			this.gbModuleInfoDetails.TabStop = false;
 			this.gbModuleInfoDetails.Text = "Details";
@@ -276,7 +276,7 @@ namespace DSM.GUI.Forms {
 			this.lblModuleInfoDetailsDescriptionValue.Location = new System.Drawing.Point(9, 108);
 			this.lblModuleInfoDetailsDescriptionValue.Margin = new System.Windows.Forms.Padding(6);
 			this.lblModuleInfoDetailsDescriptionValue.Name = "lblModuleInfoDetailsDescriptionValue";
-			this.lblModuleInfoDetailsDescriptionValue.Size = new System.Drawing.Size(660, 350);
+			this.lblModuleInfoDetailsDescriptionValue.Size = new System.Drawing.Size(660, 351);
 			this.lblModuleInfoDetailsDescriptionValue.TabIndex = 9;
 			this.lblModuleInfoDetailsDescriptionValue.Text = "DESCRIPTION";
 			// 
@@ -361,7 +361,7 @@ namespace DSM.GUI.Forms {
 			this.gbModuleInfoInstallation.Location = new System.Drawing.Point(2, 3);
 			this.gbModuleInfoInstallation.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
 			this.gbModuleInfoInstallation.Name = "gbModuleInfoInstallation";
-			this.gbModuleInfoInstallation.Size = new System.Drawing.Size(678, 37);
+			this.gbModuleInfoInstallation.Size = new System.Drawing.Size(678, 36);
 			this.gbModuleInfoInstallation.TabIndex = 0;
 			this.gbModuleInfoInstallation.TabStop = false;
 			this.gbModuleInfoInstallation.Text = "Installation";
@@ -478,6 +478,7 @@ namespace DSM.GUI.Forms {
 			this.btnLiveriesInstall.TabIndex = 0;
 			this.btnLiveriesInstall.Text = "Install...";
 			this.btnLiveriesInstall.UseVisualStyleBackColor = true;
+			this.btnLiveriesInstall.Click += new System.EventHandler(this.OnLiveriesInstall);
 			// 
 			// lvLiveries
 			// 
@@ -522,6 +523,7 @@ namespace DSM.GUI.Forms {
 			// chLiveriesSize
 			// 
 			this.chLiveriesSize.Text = "Size";
+			this.chLiveriesSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.chLiveriesSize.Width = 83;
 			// 
 			// tpModuleCountermeasures

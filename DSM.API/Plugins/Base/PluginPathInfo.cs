@@ -20,7 +20,7 @@ namespace DSM.API.Plugins.Base {
 		protected FileSystemInfo FsInfo { get; set; }
 		protected IDisposable Disposable { get; set; }
 
-		public string Slug { get => SlugHelper.GetSlug(this.Path); }
+		public string PathSlug { get => SlugHelper.GetSlug(this.Path); }
 
 		public ulong Size {
 			get {
@@ -35,6 +35,20 @@ namespace DSM.API.Plugins.Base {
 				} else {
 					return 0;
 				}
+			}
+		}
+
+		public string Slug {
+			get {
+				string pslug = this.PathSlug;
+
+				// FIXME!
+				int index;
+				while ((index = pslug.LastIndexOf(".zip")) > 0) {
+					pslug = pslug.Substring(0, index);
+				}
+
+				return pslug;
 			}
 		}
 
