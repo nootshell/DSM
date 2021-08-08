@@ -57,13 +57,11 @@ namespace DSM.GUI.Forms {
 			tooltip.SetToolTip(this.lblModuleInfoInstallationPathValue, Strings.OPEN_INSTALLDIR_IN_EXPLORER);
 
 
-			/* Populate module tabs array
-			** Adding a TabPage to a TabControl removes it from its initial TabControl's collection, so we can't use the
-			** template TabControl's collection for tab page repopulation. */
-			int i = this.tctModule.TabPages.Count;
+			/* Populate module tabs array */
+			int i = this.tcModule.TabPages.Count;
 			this.ModuleTabs = new TabPage[i];
 			for (; i-- > 0;) {
-				this.ModuleTabs[i] = this.tctModule.TabPages[i];
+				this.ModuleTabs[i] = this.tcModule.TabPages[i];
 			}
 
 			this.tpModuleInfo.Tag = typeof(Plugin);

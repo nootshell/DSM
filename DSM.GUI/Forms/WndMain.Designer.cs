@@ -37,7 +37,7 @@ namespace DSM.GUI.Forms {
 			this.tvModules = new System.Windows.Forms.TreeView();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.pModule = new System.Windows.Forms.Panel();
-			this.tctModule = new System.Windows.Forms.TabControl();
+			this.tcModule = new System.Windows.Forms.TabControl();
 			this.tpModuleInfo = new System.Windows.Forms.TabPage();
 			this.gbModuleInfoDetails = new System.Windows.Forms.GroupBox();
 			this.pbModuleInfoIcon = new System.Windows.Forms.PictureBox();
@@ -68,14 +68,13 @@ namespace DSM.GUI.Forms {
 			this.chLiveriesUnder = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.chLiveriesMethod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.chLiveriesSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tcModule = new System.Windows.Forms.TabControl();
 			this.lblNoModuleSelected = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			this.pModule.SuspendLayout();
-			this.tctModule.SuspendLayout();
+			this.tcModule.SuspendLayout();
 			this.tpModuleInfo.SuspendLayout();
 			this.gbModuleInfoDetails.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbModuleInfoIcon)).BeginInit();
@@ -183,7 +182,6 @@ namespace DSM.GUI.Forms {
 			// 
 			// pModule
 			// 
-			this.pModule.Controls.Add(this.tctModule);
 			this.pModule.Controls.Add(this.tcModule);
 			this.pModule.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pModule.Location = new System.Drawing.Point(0, 0);
@@ -191,17 +189,16 @@ namespace DSM.GUI.Forms {
 			this.pModule.Size = new System.Drawing.Size(691, 540);
 			this.pModule.TabIndex = 1;
 			// 
-			// tctModule
+			// tcModule
 			// 
-			this.tctModule.Controls.Add(this.tpModuleInfo);
-			this.tctModule.Controls.Add(this.tpModuleLiveries);
-			this.tctModule.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tctModule.Location = new System.Drawing.Point(0, 0);
-			this.tctModule.Name = "tctModule";
-			this.tctModule.SelectedIndex = 0;
-			this.tctModule.Size = new System.Drawing.Size(691, 540);
-			this.tctModule.TabIndex = 0;
-			this.tctModule.Visible = false;
+			this.tcModule.Controls.Add(this.tpModuleInfo);
+			this.tcModule.Controls.Add(this.tpModuleLiveries);
+			this.tcModule.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tcModule.Location = new System.Drawing.Point(0, 0);
+			this.tcModule.Name = "tcModule";
+			this.tcModule.SelectedIndex = 0;
+			this.tcModule.Size = new System.Drawing.Size(691, 540);
+			this.tcModule.TabIndex = 0;
 			// 
 			// tpModuleInfo
 			// 
@@ -526,15 +523,6 @@ namespace DSM.GUI.Forms {
 			this.chLiveriesSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.chLiveriesSize.Width = 83;
 			// 
-			// tcModule
-			// 
-			this.tcModule.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tcModule.Location = new System.Drawing.Point(0, 0);
-			this.tcModule.Name = "tcModule";
-			this.tcModule.SelectedIndex = 0;
-			this.tcModule.Size = new System.Drawing.Size(691, 540);
-			this.tcModule.TabIndex = 1;
-			// 
 			// lblNoModuleSelected
 			// 
 			this.lblNoModuleSelected.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -560,7 +548,7 @@ namespace DSM.GUI.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.pModule.ResumeLayout(false);
-			this.tctModule.ResumeLayout(false);
+			this.tcModule.ResumeLayout(false);
 			this.tpModuleInfo.ResumeLayout(false);
 			this.gbModuleInfoDetails.ResumeLayout(false);
 			this.gbModuleInfoDetails.PerformLayout();
@@ -588,7 +576,6 @@ namespace DSM.GUI.Forms {
 		private System.Windows.Forms.TreeView tvModules;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.Panel pModule;
-		private System.Windows.Forms.TabControl tctModule;
 		private System.Windows.Forms.TabPage tpModuleInfo;
 		private System.Windows.Forms.TabPage tpModuleLiveries;
 		private System.Windows.Forms.Label lblNoModuleSelected;
