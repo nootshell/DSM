@@ -68,7 +68,6 @@ namespace DSM.GUI.Forms {
 			this.chLiveriesUnder = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.chLiveriesMethod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.chLiveriesSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tpModuleCountermeasures = new System.Windows.Forms.TabPage();
 			this.tcModule = new System.Windows.Forms.TabControl();
 			this.lblNoModuleSelected = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -196,7 +195,6 @@ namespace DSM.GUI.Forms {
 			// 
 			this.tctModule.Controls.Add(this.tpModuleInfo);
 			this.tctModule.Controls.Add(this.tpModuleLiveries);
-			this.tctModule.Controls.Add(this.tpModuleCountermeasures);
 			this.tctModule.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tctModule.Location = new System.Drawing.Point(0, 0);
 			this.tctModule.Name = "tctModule";
@@ -243,6 +241,9 @@ namespace DSM.GUI.Forms {
 			// 
 			// pbModuleInfoIcon
 			// 
+			this.pbModuleInfoIcon.ErrorImage = global::DSM.GUI.Properties.Resources.IconUnavailable;
+			this.pbModuleInfoIcon.Image = global::DSM.GUI.Properties.Resources.IconUnavailable;
+			this.pbModuleInfoIcon.InitialImage = global::DSM.GUI.Properties.Resources.IconUnavailable;
 			this.pbModuleInfoIcon.Location = new System.Drawing.Point(6, 16);
 			this.pbModuleInfoIcon.Name = "pbModuleInfoIcon";
 			this.pbModuleInfoIcon.Size = new System.Drawing.Size(86, 86);
@@ -397,7 +398,6 @@ namespace DSM.GUI.Forms {
 			this.tpModuleLiveries.Name = "tpModuleLiveries";
 			this.tpModuleLiveries.Size = new System.Drawing.Size(683, 514);
 			this.tpModuleLiveries.TabIndex = 1;
-			this.tpModuleLiveries.Tag = "Aircraft";
 			this.tpModuleLiveries.Text = "Liveries";
 			this.tpModuleLiveries.UseVisualStyleBackColor = true;
 			// 
@@ -526,16 +526,6 @@ namespace DSM.GUI.Forms {
 			this.chLiveriesSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.chLiveriesSize.Width = 83;
 			// 
-			// tpModuleCountermeasures
-			// 
-			this.tpModuleCountermeasures.Location = new System.Drawing.Point(4, 22);
-			this.tpModuleCountermeasures.Name = "tpModuleCountermeasures";
-			this.tpModuleCountermeasures.Size = new System.Drawing.Size(683, 514);
-			this.tpModuleCountermeasures.TabIndex = 2;
-			this.tpModuleCountermeasures.Tag = "Aircraft";
-			this.tpModuleCountermeasures.Text = "Countermeasures";
-			this.tpModuleCountermeasures.UseVisualStyleBackColor = true;
-			// 
 			// tcModule
 			// 
 			this.tcModule.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -601,7 +591,6 @@ namespace DSM.GUI.Forms {
 		private System.Windows.Forms.TabControl tctModule;
 		private System.Windows.Forms.TabPage tpModuleInfo;
 		private System.Windows.Forms.TabPage tpModuleLiveries;
-		private System.Windows.Forms.TabPage tpModuleCountermeasures;
 		private System.Windows.Forms.Label lblNoModuleSelected;
 		private System.Windows.Forms.TabControl tcModule;
 		private System.Windows.Forms.GroupBox gbModuleInfoDetails;

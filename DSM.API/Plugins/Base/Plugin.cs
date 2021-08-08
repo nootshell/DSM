@@ -11,6 +11,7 @@ namespace DSM.API.Plugins.Base {
 
 	public abstract class Plugin : IDisposable {
 
+
 		public virtual bool Installed {
 			get => (this.Target?.Exists() == true);
 		}
@@ -85,15 +86,15 @@ namespace DSM.API.Plugins.Base {
 		}
 
 		public Plugin(string path, PluginPathType type, bool installed) : this()
-			=> this.alt_ctor(path, type, installed);
+			=> this.Init(path, type, installed);
 
 		public Plugin(string path, bool installed) : this()
-			=> this.alt_ctor(path, installed);
+			=> this.Init(path, installed);
 
 
 
 
-		internal void alt_ctor(string path, PluginPathType type, bool installed) {
+		internal void Init(string path, PluginPathType type, bool installed) {
 			if (installed) {
 				this.Target = new TargetInfo(path, type);
 			} else {
@@ -103,8 +104,8 @@ namespace DSM.API.Plugins.Base {
 			this.InitFromEntryFile();
 		}
 
-		internal void alt_ctor(string path, bool installed)
-			=> this.alt_ctor(path, PluginPathType.Auto, installed);
+		internal void Init(string path, bool installed)
+			=> this.Init(path, PluginPathType.Auto, installed);
 
 
 		internal virtual void FinalizeInit() {

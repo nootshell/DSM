@@ -239,6 +239,9 @@ namespace DSM.API.Plugins.Modules {
 		public IEnumerable<Livery> GetLiveries(StateDirectory directory)
 			=> this.GetLiveries(directory.Liveries);
 
+		public IEnumerable<Livery> GetLiveries(DSMContext context)
+			=> this.GetLiveries(context.StateDirectory);
+
 
 
 

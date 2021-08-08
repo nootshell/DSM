@@ -37,6 +37,7 @@ namespace DSM.API.Directories {
 
 		public DirectoryType Type { get; set; }
 
+		public ModuleDirectory CoreMods { get; protected set; }
 		public ModuleDirectory Mods { get; protected set; }
 
 
@@ -45,6 +46,7 @@ namespace DSM.API.Directories {
 		public InstallationDirectory(DirectoryType type, string path) : base(path) {
 			this.Type = type;
 
+			this.CoreMods = new ModuleDirectory(this, nameof(this.CoreMods));
 			this.Mods = new ModuleDirectory(this, nameof(this.Mods));
 		}
 

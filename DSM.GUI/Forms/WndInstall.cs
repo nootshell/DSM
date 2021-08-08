@@ -26,11 +26,6 @@ namespace DSM.GUI.Forms {
 			this.InitializeComponent();
 
 			this.Plugin = plugin;
-
-			this.pluginPathConfigurer3.SetPathInfo(this.Plugin.Source);
-
-			this.pluginPathConfigurer4.SelectedType = PluginPathType.Directory;
-			this.pluginPathConfigurer4.Suffix = Normalize.FilesystemPath($"/{this.Plugin.Slug}");
 		}
 
 	}

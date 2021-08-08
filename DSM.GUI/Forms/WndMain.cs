@@ -50,7 +50,6 @@ namespace DSM.GUI.Forms {
 			this.tcModule.ImageList = new ImageList();
 			this.tcModule.ImageList.Images.Add(this.tpModuleInfo.Text, Properties.Resources.IconInformation);
 			this.tcModule.ImageList.Images.Add(this.tpModuleLiveries.Text, Properties.Resources.IconLiveries);
-			this.tcModule.ImageList.Images.Add(this.tpModuleCountermeasures.Text, Properties.Resources.IconCountermeasures);
 
 
 			/* Set tooltips where required. */
@@ -67,6 +66,9 @@ namespace DSM.GUI.Forms {
 				this.ModuleTabs[i] = this.tctModule.TabPages[i];
 			}
 
+			this.tpModuleInfo.Tag = typeof(Plugin);
+			this.tpModuleLiveries.Tag = typeof(ILiveryConfigurableModule);
+
 
 			this.AddModuleDatabind(
 				nameof(this.SelectedModule.Path),
@@ -77,7 +79,8 @@ namespace DSM.GUI.Forms {
 			this.AddModuleDatabind(
 				nameof(this.SelectedModule.Icon),
 				this.pbModuleInfoIcon,
-				nameof(this.pbModuleInfoIcon.Image)
+				nameof(this.pbModuleInfoIcon.Image),
+				this.pbModuleInfoIcon.ErrorImage
 			);
 
 			this.AddModuleDatabind(
@@ -127,14 +130,14 @@ namespace DSM.GUI.Forms {
 			this.ReconfigureShownLiveries(this.SelectedModule);
 		}
 
-		protected void AddModuleDatabind(string moduleProperty, Control control, string controlProperty, string nullStr = "Unknown") {
+		protected void AddModuleDatabind(string moduleProperty, Control control, string controlProperty, object nullObj = null) {
 			_ = control.DataBindings.Add(
 				controlProperty,
 				this.moduleDataSource,
 				moduleProperty,
 				true,
 				DataSourceUpdateMode.OnPropertyChanged,
-				nullStr
+				(nullObj ?? "Unknown")
 			);
 		}
 
@@ -200,26 +203,25 @@ namespace DSM.GUI.Forms {
 
 
 		protected void ReconfigureShownTabs(Module module) {
-			/*this.tcModule.SuspendLayout();
-
-			TabPage selected = this.tcModule.SelectedTab;*/
-			this.tcModule.TabPages.Clear();
-
 			Type type = module.GetType();
-			string typeName = type.Name;
+
 			foreach (TabPage page in this.ModuleTabs) {
-				if ((page.Tag is string allowType && allowType == typeName) || !(page.Tag is string)) {
-					this.tcModule.TabPages.Add(page);
+				if (page.Tag is Type type_supported) {
+					if (type_supported.IsAssignableFrom(type)) {
+						if (!this.tcModule.TabPages.Contains(page)) {
+							this.tcModule.TabPages.Add(page);
+						}
+					} else {
+						if (this.tcModule.TabPages.Contains(page)) {
+							this.tcModule.TabPages.Remove(page);
+						}
+					}
+				}
+
+				if (this.tcModule.TabPages.Contains(page)) {
 					page.ImageKey = page.Text;
 				}
 			}
-
-			/*if (selected != null && this.tcModule.TabPages.Contains(selected)) {
-				this.tcModule.SelectTab(selected);
-			}
-
-			this.tcModule.Refresh();
-			this.tcModule.ResumeLayout();*/
 		}
 
 
@@ -277,6 +279,7 @@ namespace DSM.GUI.Forms {
 				);
 			}
 
+			//_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.CORE, Strings.CORE, this.Context.InstallationDirectory.CoreMods, this.tvModules.ImageList));
 			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.CORE, Strings.CORE, this.Context.InstallationDirectory.Mods, this.tvModules.ImageList));
 			_ = this.tvModules.Nodes.Add(this.BuildRootNode(Strings.MODS, Strings.MODS, this.Context.StateDirectory.Mods, this.tvModules.ImageList));
 

@@ -37,7 +37,7 @@ namespace DSM.API.Directories.Subdirectories {
 				module = null;
 				try {
 					module = (Module)Activator.CreateInstance(tmodule);
-					module.alt_ctor(directory, true);
+					module.Init(directory, true);
 				} catch (Relua.ParserException) {
 					Console.WriteLine($"Parser exception in {directory}");
 					continue;
