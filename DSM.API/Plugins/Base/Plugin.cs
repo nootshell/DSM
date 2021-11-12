@@ -96,7 +96,7 @@ namespace DSM.API.Plugins.Base {
 
 
 		protected virtual Stream GetEntryFileStream()
-			=> this.PathInfo.GetFileStream(this.EntryFile);
+			=> this.PathInfo.GetFileStream(this.EntryFile, true);
 
 
 		protected abstract void InitFromEntryFileBlock(Block block);

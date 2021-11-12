@@ -135,6 +135,8 @@ namespace DSM.API.Plugins.Base {
 
 
 
+		protected string ZipArchiveEntryPrefix = null;
+
 		protected virtual ZipArchive OpenZipArchive() {
 			if (this.Type != PluginPathType.ZipArchive) {
 				throw new InvalidOperationException("This instance has an invalid type.");
@@ -149,17 +151,35 @@ namespace DSM.API.Plugins.Base {
 			return (ZipArchive)(this.Disposable = ZipFile.Open(this.Path, ZipArchiveMode.Read));
 		}
 
-		// TODO: support non-root entry files (for future repacking feature)
-		protected virtual Stream OpenZipArchiveEntry(string entryname) {
+
+		protected virtual Stream OpenZipArchiveEntry(string entryname, StringComparison comparisonType = StringComparison.OrdinalIgnoreCase, bool askingForRootEntry = false) {
 			ZipArchive archive = this.OpenZipArchive();
-			ZipArchiveEntry entry = archive.GetEntry(entryname);
+			ZipArchiveEntry entry = null;
+
+			if (askingForRootEntry) {
+				if (this.ZipArchiveEntryPrefix != null) {
+					throw new InvalidOperationException("A root entry seems to already have been opened.");
+				}
+
+				entry = archive.Entries.SingleOrDefault(e => (string.Compare(entryname, e.Name, comparisonType) == 0));
+				if (entry != null) {
+					this.ZipArchiveEntryPrefix = entry.FullName.Substring(
+						0,
+						entry.FullName.Length - entry.Name.Length
+					);
+				}
+			} else {
+				/* Force static lookup for non-root items to enforce a prefixed directory structure. */
+				entry = archive.GetEntry($"{this.ZipArchiveEntryPrefix}/{entryname}");
+			}
+
 			return entry.Open();
 		}
 
 
 
 
-		public virtual Stream GetFileStream(string relpath) {
+		public virtual Stream GetFileStream(string relpath, bool askingForRootEntry = false) {
 			this.Verify();
 
 			switch (this.Type) {
@@ -167,7 +187,7 @@ namespace DSM.API.Plugins.Base {
 					return File.OpenRead(Normalize.FilesystemPath($"{this.Path}/{relpath}"));
 
 				case PluginPathType.ZipArchive:
-					return this.OpenZipArchiveEntry(relpath);
+					return this.OpenZipArchiveEntry(relpath, askingForRootEntry: askingForRootEntry);
 
 				default:
 					throw new InvalidOperationException("Should not be getting here.");
