@@ -1,4 +1,10 @@
-namespace DSM.API.Plugins.Modules {
+/*
+**	Disabled, TODO.
+**
+**	Parsing for *.cmp files should be added to properly reflect information regarding campaigns.
+*/
+
+/*namespace DSM.API.Plugins.Modules {
 
 	[ModuleCategory("campaigns")]
 	public class Campaign : Module {
@@ -8,4 +14,4 @@ namespace DSM.API.Plugins.Modules {
 
 	}
 
-}
+}*/
