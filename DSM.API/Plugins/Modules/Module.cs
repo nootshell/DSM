@@ -21,6 +21,7 @@ namespace DSM.API.Plugins.Modules {
 
 		private static readonly string[] IconPaths = new string[] {
 			"Theme/icon.png",
+			"Theme/1/icon.png",
 			"Skins/icon.png",
 			"Skins/1/icon.png",
 		};
