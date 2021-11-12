@@ -176,7 +176,7 @@ namespace DSM.API.Plugins.Modules {
 		internal override void FinalizeInit() {
 			base.FinalizeInit();
 
-			this.AddFilesystemSlugIfNone(this.GetPrimaryPathInfo().Slug);
+			this.AddFilesystemSlugIfNone(this.PathInfo.Slug);
 			this.FilesystemSlugs = this.filesystemSlugs.ToArray();
 		}
 
@@ -247,7 +247,7 @@ namespace DSM.API.Plugins.Modules {
 
 
 		protected virtual Image GetIcon() {
-			PluginPathInfo path = this.GetPrimaryPathInfo();
+			PluginPathInfo path = this.PathInfo;
 
 			foreach (string iconpath in IconPaths) {
 				try {

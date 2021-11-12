@@ -12,7 +12,7 @@ using DSM.API.Utilities;
 
 namespace DSM.API.Plugins.Base {
 
-	public abstract class PluginPathInfo : IDisposable {
+	public class PluginPathInfo : IDisposable {
 
 		public string Path { get; set; }
 		public PluginPathType Type { get; set; }
@@ -51,7 +51,7 @@ namespace DSM.API.Plugins.Base {
 				return pslug;
 			}
 		}
-
+		
 
 
 

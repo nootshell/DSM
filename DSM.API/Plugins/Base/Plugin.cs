@@ -13,11 +13,11 @@ namespace DSM.API.Plugins.Base {
 
 
 		public virtual bool Installed {
-			get => (this.Target?.Exists() == true);
+			get => (this.PathInfo?.Exists() == true);
 		}
 
-		public SourceInfo Source { get; set; }
-		public TargetInfo Target { get; set; }
+		public PluginPathInfo PathInfo { get; set; }
+		public bool IsInstalled { get; set; }
 
 		protected virtual string EntryFile { get; private set; }
 
@@ -25,23 +25,23 @@ namespace DSM.API.Plugins.Base {
 
 
 		public string Path {
-			get => this.GetPrimaryPathInfo().Path;
+			get => this.PathInfo.Path;
 		}
 
 		public string PathSlug {
-			get => this.GetPrimaryPathInfo().PathSlug;
+			get => this.PathInfo.PathSlug;
 		}
 
 		public ulong Size {
-			get => this.GetPrimaryPathInfo().Size;
+			get => this.PathInfo.Size;
 		}
 
 		public string Slug {
-			get => this.GetPrimaryPathInfo().Slug;
+			get => this.PathInfo.Slug;
 		}
 
 		public PluginPathType Type {
-			get => this.GetPrimaryPathInfo().Type;
+			get => this.PathInfo.Type;
 		}
 
 
@@ -66,25 +66,6 @@ namespace DSM.API.Plugins.Base {
 			}
 		}
 
-		public Plugin(SourceInfo source, TargetInfo target) : this() {
-			this.Source = source;
-			this.Target = target;
-
-			this.InitFromEntryFile();
-		}
-
-		public Plugin(string sourcePath, PluginPathType sourceType, string targetPath, PluginPathType targetType) : this() {
-			if (sourcePath != null) {
-				this.Source = new SourceInfo(sourcePath, sourceType);
-			}
-
-			if (targetPath != null) {
-				this.Target = new TargetInfo(targetPath, targetType);
-			}
-
-			this.InitFromEntryFile();
-		}
-
 		public Plugin(string path, PluginPathType type, bool installed) : this()
 			=> this.Init(path, type, installed);
 
@@ -95,11 +76,8 @@ namespace DSM.API.Plugins.Base {
 
 
 		internal void Init(string path, PluginPathType type, bool installed) {
-			if (installed) {
-				this.Target = new TargetInfo(path, type);
-			} else {
-				this.Source = new SourceInfo(path, type);
-			}
+			this.PathInfo = new PluginPathInfo(path, type);
+			this.IsInstalled = installed;
 
 			this.InitFromEntryFile();
 		}
@@ -111,18 +89,14 @@ namespace DSM.API.Plugins.Base {
 		internal virtual void FinalizeInit() {
 			// TODO: this.Source?.FinalizeInit(installIntended);
 			// for now keep sources open, since those are most likely going to be installed and therefore reopened
-			this.Target?.FinalizeInit();
+			this.PathInfo?.FinalizeInit();
 		}
 
 
 
 
-		public virtual PluginPathInfo GetPrimaryPathInfo()
-			=> (this.Installed ? (PluginPathInfo)this.Target : (PluginPathInfo)this.Source);
-
-
 		protected virtual Stream GetEntryFileStream()
-			=> this.GetPrimaryPathInfo().GetFileStream(this.EntryFile);
+			=> this.PathInfo.GetFileStream(this.EntryFile);
 
 
 		protected abstract void InitFromEntryFileBlock(Block block);
@@ -146,8 +120,7 @@ namespace DSM.API.Plugins.Base {
 		protected virtual void Dispose(bool disposing) {
 			if (!this.__disposed) {
 				if (disposing) {
-					this.Source?.Dispose();
-					this.Target?.Dispose();
+					this.PathInfo?.Dispose();
 				}
 
 				this.__disposed = true;
